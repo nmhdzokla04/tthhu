@@ -5,26 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thư Trung Thu</title>
     <style>
+        /* CSS cho phong bì và lời chúc */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #f4e8d1;
+            background-color: #f4e8d1; /* Màu nền nhẹ nhàng */
             margin: 0;
-            overflow: hidden;
+            overflow: hidden; /* Ẩn thanh cuộn */
+            position: relative; /* Để các phần tử con có thể định vị tuyệt đối */
         }
         .envelope-container {
             perspective: 1000px;
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 10; /* Đảm bảo phong bì ở trên các phần tử khác (trừ pháo hoa) */
         }
         .envelope {
             width: 300px;
             height: 200px;
-            background-color: #d2b48c;
+            background-color: #d2b48c; /* Màu nâu gỗ */
             border-radius: 5px;
             position: relative;
             cursor: pointer;
@@ -33,14 +36,14 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         .envelope:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px); /* Hiệu ứng nhấc lên khi rê chuột */
         }
         .envelope-flap {
             width: 0;
             height: 0;
             border-left: 150px solid transparent;
             border-right: 150px solid transparent;
-            border-top: 100px solid #a08c6f;
+            border-top: 100px solid #a08c6f; /* Màu nắp phong bì */
             position: absolute;
             top: 0;
             left: 0;
@@ -49,14 +52,14 @@
         }
         .envelope-content {
             position: absolute;
-            top: 100px;
+            top: 100px; /* Bắt đầu từ đáy nắp */
             left: 0;
             width: 100%;
-            height: 100px;
+            height: 100px; /* Chiều cao ban đầu của phần nội dung */
             background-color: #f4e8d1;
             border-top: 1px dashed #a08c6f;
             overflow: hidden;
-            transition: height 0.8s ease-in-out;
+            transition: height 0.8s ease-in-out; /* Transition cho chiều cao */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -67,32 +70,45 @@
             color: #333;
             padding: 20px;
             box-sizing: border-box;
-            transform: translateY(50px);
-            opacity: 0;
-            transition: transform 0.8s ease-in-out 0.5s, opacity 0.8s ease-in-out 0.5s;
+            transform: translateY(50px); /* Dịch xuống ban đầu */
+            opacity: 0; /* Ban đầu ẩn */
+            transition: transform 0.8s ease-in-out 0.5s, opacity 0.8s ease-in-out 0.5s; /* Delay animation */
         }
         .letter h2 {
             margin-bottom: 15px;
-            color: #8b4513;
+            color: #8b4513; /* Màu nâu đậm cho tiêu đề */
             font-size: 1.5em;
         }
         .letter p {
             margin-bottom: 10px;
             line-height: 1.6;
         }
+        /* CSS khi phong bì mở */
         .envelope.open .envelope-flap {
-            transform: rotateX(-180deg);
+            transform: rotateX(-180deg); /* Lật nắp */
         }
         .envelope.open .envelope-content {
-            height: 200px;
+            height: 200px; /* Mở rộng chiều cao để lộ thư */
         }
         .envelope.open .letter {
-            transform: translateY(0);
-            opacity: 1;
+            transform: translateY(0); /* Về vị trí ban đầu */
+            opacity: 1; /* Hiện thư */
+        }
+
+        /* CSS cho hiệu ứng pháo hoa */
+        #fireworksCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Cho phép click xuyên qua canvas */
+            z-index: 9999; /* Đảm bảo hiển thị trên cùng */
         }
     </style>
 </head>
 <body>
+    <!-- Container cho phong bì -->
     <div class="envelope-container">
         <div class="envelope" id="envelope">
             <div class="envelope-flap"></div>
@@ -105,25 +121,20 @@
         </div>
     </div>
 
-    <script>
-        // Mã hiệu ứng pháo hoa được thêm vào đúng vị trí
-        const canvasFireworks = document.createElement('canvas');
-        canvasFireworks.id = 'fireworksCanvas';
-        canvasFireworks.style.position = 'fixed';
-        canvasFireworks.style.top = '0';
-        canvasFireworks.style.left = '0';
-        canvasFireworks.style.width = '100%';
-        canvasFireworks.style.height = '100%';
-        canvasFireworks.style.pointerEvents = 'none';
-        canvasFireworks.style.zIndex = '9999';
-        document.body.appendChild(canvasFireworks);
+    <!-- Hiệu ứng pháo hoa -->
+    <canvas id="fireworksCanvas"></canvas>
 
+    <script>
+        // --- Khởi tạo và điều khiển hiệu ứng pháo hoa ---
+        const canvasFireworks = document.getElementById('fireworksCanvas');
         const ctxFireworks = canvasFireworks.getContext('2d');
         canvasFireworks.width = window.innerWidth;
         canvasFireworks.height = window.innerHeight;
 
-        let fireworks = [];
+        let fireworks = []; // Mảng chứa các quả pháo hoa
+        let isFireworksRunning = true; // Biến theo dõi trạng thái chạy của pháo hoa
 
+        // Hàm tạo một tia lửa
         function Spark(x, y, color, size, speedX, speedY) {
             this.x = x;
             this.y = y;
@@ -131,15 +142,15 @@
             this.size = size;
             this.speedX = speedX;
             this.speedY = speedY;
-            this.life = Math.random() * 60 + 30;
-            this.gravity = 0.05;
+            this.life = Math.random() * 60 + 30; // Thời gian tồn tại
+            this.gravity = 0.05; // Lực hấp dẫn ảnh hưởng đến tia lửa
         }
 
         Spark.prototype.update = function() {
             this.x += this.speedX;
             this.y += this.speedY + this.gravity;
-            this.size *= 0.96;
-            this.life--;
+            this.size *= 0.96; // Giảm dần kích thước
+            this.life--; // Giảm dần thời gian tồn tại
         };
 
         Spark.prototype.draw = function(ctx) {
@@ -149,22 +160,24 @@
             ctx.fill();
         };
 
+        // Hàm tạo một quả pháo hoa
         function Firework(x, y) {
             this.x = x;
             this.y = y;
-            this.sparks = [];
-            const numSparks = Math.floor(Math.random() * 50) + 50;
-            const colors = ['#ff5733', '#33ff57', '#5733ff', '#f4ff33', '#ff33e3', '#fff'];
+            this.sparks = []; // Mảng các tia lửa của quả pháo hoa này
+            const numSparks = Math.floor(Math.random() * 50) + 50; // Số lượng tia lửa ngẫu nhiên
+            const colors = ['#ff5733', '#33ff57', '#5733ff', '#f4ff33', '#ff33e3', '#fff']; // Các màu sắc pháo hoa
             for (let i = 0; i < numSparks; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 5 + 2;
-                const color = colors[Math.floor(Math.random() * colors.length)];
+                const angle = Math.random() * Math.PI * 2; // Góc bắn ngẫu nhiên
+                const speed = Math.random() * 5 + 2; // Tốc độ ngẫu nhiên
+                const color = colors[Math.floor(Math.random() * colors.length)]; // Chọn màu ngẫu nhiên
                 this.sparks.push(new Spark(x, y, color, Math.random() * 3 + 1, Math.cos(angle) * speed, Math.sin(angle) * speed));
             }
         }
 
         Firework.prototype.update = function() {
             this.sparks.forEach(spark => spark.update());
+            // Loại bỏ các tia lửa đã hết vòng đời
             this.sparks = this.sparks.filter(spark => spark.life > 0);
         };
 
@@ -172,47 +185,65 @@
             this.sparks.forEach(spark => spark.draw(ctx));
         };
 
+        // Hàm chính để vẽ hiệu ứng hoạt ảnh
         function animate() {
+            if (!isFireworksRunning) return; // Nếu đang tạm dừng, không vẽ nữa
+
+            // Làm mờ khung hình trước để tạo hiệu ứng đuôi pháo hoa
             ctxFireworks.fillStyle = 'rgba(0, 0, 0, 0.1)';
             ctxFireworks.fillRect(0, 0, canvasFireworks.width, canvasFireworks.height);
 
+            // Cập nhật và vẽ từng quả pháo hoa
             fireworks.forEach((firework, index) => {
                 firework.update();
                 firework.draw(ctxFireworks);
+                // Loại bỏ quả pháo hoa đã nổ hết tia lửa
                 if (firework.sparks.length === 0) {
                     fireworks.splice(index, 1);
                 }
             });
 
-            requestAnimationFrame(animate);
+            requestAnimationFrame(animate); // Yêu cầu khung hình tiếp theo
         }
 
+        // Xử lý khi thay đổi kích thước cửa sổ
         window.addEventListener('resize', () => {
             canvasFireworks.width = window.innerWidth;
             canvasFireworks.height = window.innerHeight;
         });
 
+        // Thêm pháo hoa khi click vào canvas
         canvasFireworks.addEventListener('click', (e) => {
             fireworks.push(new Firework(e.clientX, e.clientY));
         });
 
+        // Khởi tạo hiệu ứng khi trang tải xong
         window.addEventListener('load', () => {
-            animate();
+            animate(); // Bắt đầu vòng lặp hoạt ảnh
+            // Thêm một vài pháo hoa ban đầu để trang trí
             for (let i = 0; i < 3; i++) {
                 setTimeout(() => {
                     fireworks.push(new Firework(Math.random() * window.innerWidth, Math.random() * window.innerHeight / 2));
-                }, i * 1000);
+                }, i * 1000); // Hiển thị cách nhau 1 giây
             }
         });
 
-        // Sự kiện mở thư đã được sửa lỗi, đảm bảo chạy đúng
+        // Hàm để tạm dừng hoặc tiếp tục hiệu ứng pháo hoa
+        function toggleFireworks() {
+            isFireworksRunning = !isFireworksRunning;
+            if (isFireworksRunning) {
+                animate(); // Nếu bật lại, bắt đầu chạy lại
+            }
+        }
+
+        // --- Xử lý sự kiện mở phong bì ---
         const envelope = document.getElementById('envelope');
         if (envelope) {
             envelope.addEventListener('click', () => {
-                envelope.classList.toggle('open');
+                envelope.classList.toggle('open'); // Thêm/xóa lớp 'open' để kích hoạt animation
             });
         } else {
-            console.error("Không tìm thấy phần tử phong bì");
+            console.error("Không tìm thấy phần tử phong bì với ID 'envelope'");
         }
     </script>
 </body>
