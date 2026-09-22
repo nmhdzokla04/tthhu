@@ -176,9 +176,59 @@ body{background:#03030d}
   .old-home:before{font-size:18px;left:15px;top:18px}
 }
 
+
+/* ===== MÀN HÌNH MỞ THƯ TRUNG THU ===== */
+#intro{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(255,45,190,.13),transparent 28%),
+    radial-gradient(circle at 50% 50%,#11101d 0,#070711 48%,#02020a 100%);
+  transition:opacity .7s ease,visibility .7s ease;
+}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+#introStars{position:absolute;inset:0;overflow:hidden}
+.intro-star{
+  position:absolute;width:2px;height:2px;border-radius:50%;
+  background:#fff;opacity:.65;animation:introTwinkle 2.5s infinite;
+}
+@keyframes introTwinkle{50%{opacity:1;transform:scale(1.8)}}
+.intro-box{
+  position:relative;z-index:2;
+  text-align:center;
+  padding:34px 30px;
+}
+.intro-heart{
+  font-size:54px;
+  margin-bottom:18px;
+  filter:drop-shadow(0 0 18px #ff3fc4);
+  animation:introFloat 2.4s ease-in-out infinite;
+}
+.intro-box button{
+  min-width:280px;
+  border:2px solid #fff;
+  background:rgba(115,30,100,.5);
+  box-shadow:0 0 18px #ff39c4,0 0 42px #ff39c477;
+}
+@keyframes introFloat{50%{transform:translateY(-10px) scale(1.05)}}
+body.locked{overflow:hidden}
+
 </style>
 </head>
-<body>
+<body class="locked">
+
+<div id="intro">
+  <div id="introStars"></div>
+  <div class="intro-box">
+    <div class="intro-heart">💗</div>
+    <button type="button" id="openLetter">💗 Mở thư Trung Thu 💗</button>
+  </div>
+</div>
+
 <div id="stars"></div>
 <div class="lantern l1">🏮</div><div class="lantern l2">🏮</div><div class="lantern l3">🏮</div><div class="lantern l4">🏮</div>
 
@@ -247,6 +297,30 @@ function startMusic(){
    document.getElementById("play").textContent="🎵 Bấm lại để phát nhạc";
  });
 }
+
+// Màn hình mở thư: bấm nút mới vào trang và cho phép nhạc phát.
+(function(){
+  const intro=document.getElementById("intro");
+  const btn=document.getElementById("openLetter");
+  const box=document.getElementById("introStars");
+  for(let i=0;i<90;i++){
+    const s=document.createElement("i");
+    s.className="intro-star";
+    s.style.left=(Math.random()*100)+"%";
+    s.style.top=(Math.random()*100)+"%";
+    s.style.animationDelay=(Math.random()*2.5)+"s";
+    box.appendChild(s);
+  }
+  btn.addEventListener("click",function(){
+    document.body.classList.remove("locked");
+    intro.classList.add("hide");
+    if(typeof startMusic==="function"){
+      startMusic();
+    }
+    setTimeout(()=>intro.remove(),800);
+  });
+})();
+
 </script>
 </body>
 </html>
