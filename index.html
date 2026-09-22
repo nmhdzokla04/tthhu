@@ -259,71 +259,9 @@ body.locked{overflow:hidden}
 </section>
 
 <section id="wish">
-<h2>Gửi Minh Châu 💗</h2>
-<p class="message">Chúc em một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. Cảm ơn em vì tất cả. Mong chúng ta luôn ở bên nhau và có thật nhiều kỷ niệm đẹp. 🌙🐰✨</p>
+<h2>Gửi 🐰 kimanhiudau 💗</h2>
+<p class="message">Chúc cậu một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. Cảm ơn vì tất cả. Mong chúng ta luôn ở bên nhau và có thật nhiều kỷ niệm đẹp. 🌙🐰✨</p>
 </section>
-
-<section id="memories">
-<h2>Những khoảnh khắc 💞</h2>
-<div class="gallery">
-<div class="card"><div class="inner"><img src="photo1.jpg" alt="Kỷ niệm 1"><div class="back">💗 Mãi bên nhau nhé</div></div></div>
-<div class="card"><div class="inner"><img src="photo2.jpg" alt="Kỷ niệm 2"><div class="back">🌙 Trung Thu vui vẻ</div></div></div>
-<div class="card"><div class="inner"><img src="photo3.jpg" alt="Kỷ niệm 3"><div class="back">✨ I love you</div></div></div>
-<div class="card"><div class="inner"><img src="photo4.jpg" alt="Kỷ niệm 4"><div class="back">🐰 Minh Châu 💗</div></div></div>
-<div class="card"><div class="inner"><img src="photo5.jpg" alt="Kỷ niệm 5"><div class="back">💕 Thương em nhiều</div></div></div>
-<div class="card"><div class="inner"><img src="photo6.jpg" alt="Kỷ niệm 6"><div class="back">✨ Cùng nhau nhé</div></div></div>
-<div class="card"><div class="inner"><img src="photo7.jpg" alt="Kỷ niệm 7"><div class="back">🌙 Một mùa Trung Thu</div></div></div>
-<div class="card"><div class="inner"><img src="photo8.jpg" alt="Kỷ niệm 8"><div class="back">💗 Love you</div></div></div>
-</div>
-</section>
-
-<audio id="audio" src="music.mp3" loop preload="auto"></audio>
-<footer>🐰 kimanhiudau · i love you 💗</footer>
-
-<script>
-for(let i=0;i<160;i++){
- const s=document.createElement("i");
- s.className="star";
- s.style.left=(Math.random()*100)+"%";
- s.style.top=(Math.random()*100)+"%";
- s.style.animationDelay=(Math.random()*2)+"s";
- document.getElementById("stars").appendChild(s);
-}
-function startMusic(){
- const audio=document.getElementById("audio");
- audio.play().then(()=>{
-   document.getElementById("play").textContent="🎵 Đang phát nhạc 💗";
- }).catch(()=>{
-   document.getElementById("play").textContent="🎵 Bấm lại để phát nhạc";
- });
-}
-
-// Màn hình mở thư: bấm nút mới vào trang và cho phép nhạc phát.
-(function(){
-  const intro=document.getElementById("intro");
-  const btn=document.getElementById("openLetter");
-  const box=document.getElementById("introStars");
-  for(let i=0;i<90;i++){
-    const s=document.createElement("i");
-    s.className="intro-star";
-    s.style.left=(Math.random()*100)+"%";
-    s.style.top=(Math.random()*100)+"%";
-    s.style.animationDelay=(Math.random()*2.5)+"s";
-    box.appendChild(s);
-  }
-  btn.addEventListener("click",function(){
-    document.body.classList.remove("locked");
-    intro.classList.add("hide");
-    if(typeof startMusic==="function"){
-      startMusic();
-    }
-    setTimeout(()=>intro.remove(),800);
-  });
-})();
-
-</script>
-</body>
-</html>
 // --- Hiệu ứng pháo hoa ---
 const canvasFireworks = document.createElement('canvas');
 canvasFireworks.id = 'fireworksCanvas';
@@ -425,3 +363,65 @@ window.addEventListener('load', () => {
     }
 });
 // --- Kết thúc hiệu ứng pháo hoa ---
+
+<section id="memories">
+<h2>Những khoảnh khắc 💞</h2>
+<div class="gallery">
+<div class="card"><div class="inner"><img src="photo1.jpg" alt="Kỷ niệm 1"><div class="back">💗 Mãi bên nhau nhé</div></div></div>
+<div class="card"><div class="inner"><img src="photo2.jpg" alt="Kỷ niệm 2"><div class="back">🌙 Trung Thu vui vẻ</div></div></div>
+<div class="card"><div class="inner"><img src="photo3.jpg" alt="Kỷ niệm 3"><div class="back">✨ I love you</div></div></div>
+<div class="card"><div class="inner"><img src="photo4.jpg" alt="Kỷ niệm 4"><div class="back">🐰 kimanhiudau 💗</div></div></div>
+<div class="card"><div class="inner"><img src="photo5.jpg" alt="Kỷ niệm 5"><div class="back">💕 Thương cậu nhiều</div></div></div>
+<div class="card"><div class="inner"><img src="photo6.jpg" alt="Kỷ niệm 6"><div class="back">✨ Cùng nhau nhé</div></div></div>
+<div class="card"><div class="inner"><img src="photo7.jpg" alt="Kỷ niệm 7"><div class="back">🌙 Một mùa Trung Thu</div></div></div>
+<div class="card"><div class="inner"><img src="photo8.jpg" alt="Kỷ niệm 8"><div class="back">💗 Love you</div></div></div>
+</div>
+</section>
+
+<audio id="audio" src="music.mp3" loop preload="auto"></audio>
+<footer>🐰 kimanhiudau · i love you 💗</footer>
+
+<script>
+for(let i=0;i<160;i++){
+ const s=document.createElement("i");
+ s.className="star";
+ s.style.left=(Math.random()*100)+"%";
+ s.style.top=(Math.random()*100)+"%";
+ s.style.animationDelay=(Math.random()*2)+"s";
+ document.getElementById("stars").appendChild(s);
+}
+function startMusic(){
+ const audio=document.getElementById("audio");
+ audio.play().then(()=>{
+   document.getElementById("play").textContent="🎵 Đang phát nhạc 💗";
+ }).catch(()=>{
+   document.getElementById("play").textContent="🎵 Bấm lại để phát nhạc";
+ });
+}
+
+// Màn hình mở thư: bấm nút mới vào trang và cho phép nhạc phát.
+(function(){
+  const intro=document.getElementById("intro");
+  const btn=document.getElementById("openLetter");
+  const box=document.getElementById("introStars");
+  for(let i=0;i<90;i++){
+    const s=document.createElement("i");
+    s.className="intro-star";
+    s.style.left=(Math.random()*100)+"%";
+    s.style.top=(Math.random()*100)+"%";
+    s.style.animationDelay=(Math.random()*2.5)+"s";
+    box.appendChild(s);
+  }
+  btn.addEventListener("click",function(){
+    document.body.classList.remove("locked");
+    intro.classList.add("hide");
+    if(typeof startMusic==="function"){
+      startMusic();
+    }
+    setTimeout(()=>intro.remove(),800);
+  });
+})();
+
+</script>
+</body>
+</html>
