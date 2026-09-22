@@ -1,250 +1,396 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thư Trung Thu</title>
-    <style>
-        /* CSS cho phong bì và lời chúc */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f4e8d1; /* Màu nền nhẹ nhàng */
-            margin: 0;
-            overflow: hidden; /* Ẩn thanh cuộn */
-            position: relative; /* Để các phần tử con có thể định vị tuyệt đối */
-        }
-        .envelope-container {
-            perspective: 1000px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10; /* Đảm bảo phong bì ở trên các phần tử khác (trừ pháo hoa) */
-        }
-        .envelope {
-            width: 300px;
-            height: 200px;
-            background-color: #d2b48c; /* Màu nâu gỗ */
-            border-radius: 5px;
-            position: relative;
-            cursor: pointer;
-            transform-style: preserve-3d;
-            transition: transform 0.8s ease-in-out;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .envelope:hover {
-            transform: translateY(-10px); /* Hiệu ứng nhấc lên khi rê chuột */
-        }
-        .envelope-flap {
-            width: 0;
-            height: 0;
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-top: 100px solid #a08c6f; /* Màu nắp phong bì */
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform-origin: top;
-            transition: transform 0.8s ease-in-out;
-        }
-        .envelope-content {
-            position: absolute;
-            top: 100px; /* Bắt đầu từ đáy nắp */
-            left: 0;
-            width: 100%;
-            height: 100px; /* Chiều cao ban đầu của phần nội dung */
-            background-color: #f4e8d1;
-            border-top: 1px dashed #a08c6f;
-            overflow: hidden;
-            transition: height 0.8s ease-in-out; /* Transition cho chiều cao */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-sizing: border-box;
-        }
-        .letter {
-            text-align: center;
-            color: #333;
-            padding: 20px;
-            box-sizing: border-box;
-            transform: translateY(50px); /* Dịch xuống ban đầu */
-            opacity: 0; /* Ban đầu ẩn */
-            transition: transform 0.8s ease-in-out 0.5s, opacity 0.8s ease-in-out 0.5s; /* Delay animation */
-        }
-        .letter h2 {
-            margin-bottom: 15px;
-            color: #8b4513; /* Màu nâu đậm cho tiêu đề */
-            font-size: 1.5em;
-        }
-        .letter p {
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-        /* CSS khi phong bì mở */
-        .envelope.open .envelope-flap {
-            transform: rotateX(-180deg); /* Lật nắp */
-        }
-        .envelope.open .envelope-content {
-            height: 200px; /* Mở rộng chiều cao để lộ thư */
-        }
-        .envelope.open .letter {
-            transform: translateY(0); /* Về vị trí ban đầu */
-            opacity: 1; /* Hiện thư */
-        }
+<!doctype html> 
+<html lang="vi"> 
+<head> 
+<meta charset="utf-8"> 
+<meta name="viewport" content="width=device-width,initial-scale=1"> 
+<title>kimanhiudau 💗</title> 
+<style> 
+*{box-sizing:border-box} 
+html{scroll-behavior:smooth} 
+body{margin:0;background:#02030d;color:#fff;font-family:Arial,sans-serif;overflow-x:hidden} 
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none} 
+.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:twinkle 2s ease-in-out infinite} 
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1;transform:scale(2)}} 
+nav{position:fixed;z-index:20;top:0;left:0;right:0;text-align:center;padding:16px;background:#030516aa;backdrop-filter:blur(9px)} 
+nav a{color:#fff;text-decoration:none;font-weight:bold;margin:0 13px;text-shadow:0 0 12px #ff5acb} 
+.hero{min-height:100vh;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:85px 18px 40px;background:radial-gradient(circle at 50% 35%,#39255d55,transparent 50%)} 
+.moon{width:175px;height:175px;border-radius:50%;background:#fff1a4;box-shadow:0 0 30px #ffe995,0 0 90px #ffb84d88;position:relative;animation:float 4s ease-in-out infinite} 
+.moon:after{content:"🐰";position:absolute;font-size:70px;left:52px;top:57px} 
+@keyframes float{50%{transform:translateY(-13px)}} 
+.hero h1{font-size:clamp(38px,8vw,76px);margin:22px 0 8px;color:#fff;text-shadow:0 0 8px #fff,0 0 25px #ff58cb,0 0 60px #ff1fb9;animation:neon 1.8s infinite alternate} 
+@keyframes neon{to{text-shadow:0 0 5px #fff,0 0 20px #ffb0e8,0 0 60px #ff22bc}} 
+.hero p{font-size:clamp(18px,4vw,28px);font-weight:bold;color:#ffd9f5} 
+button{border:0;border-radius:999px;padding:15px 28px;color:#fff;font-size:17px;font-weight:bold;background:linear-gradient(90deg,#ff3dae,#9b5cff);box-shadow:0 0 25px #ff46c1;cursor:pointer;animation:pulse 2s infinite} 
+@keyframes pulse{50%{transform:scale(1.04);box-shadow:0 0 48px #ff46c1}} 
+.lantern{position:fixed;z-index:1;font-size:42px;animation:lantern 6s ease-in-out infinite} 
+.l1{left:5%;top:25%}.l2{right:5%;top:30%;animation-delay:1s}.l3{left:12%;bottom:15%;animation-delay:2s}.l4{right:12%;bottom:18%;animation-delay:3s} 
+@keyframes lantern{50%{transform:translateY(-30px) rotate(7deg)}} 
+section{position:relative;z-index:2;min-height:70vh;padding:90px 6%;text-align:center} 
+h2{font-size:clamp(30px,6vw,50px);color:#ffd5f3;text-shadow:0 0 22px #ff42be} 
+.message{max-width:850px;margin:auto;font-size:20px;line-height:1.8;color:#ffe9f8} 
+.gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:28px;margin-top:45px} 
+.card{width:min(240px,78vw);height:310px;perspective:1200px;animation:cardFloat 4s ease-in-out infinite} 
+.card:nth-child(2){animation-delay:.4s}.card:nth-child(3){animation-delay:.8s}.card:nth-child(4){animation-delay:1.2s}.card:nth-child(5){animation-delay:1.6s}.card:nth-child(6){animation-delay:2s}.card:nth-child(7){animation-delay:2.4s}.card:nth-child(8){animation-delay:2.8s} 
+@keyframes cardFloat{50%{transform:translateY(-17px)}} 
+.inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:spin 7s ease-in-out infinite} 
+@keyframes spin{0%,12%{transform:rotateY(0) rotateX(0) rotateZ(-2deg)}50%{transform:rotateY(180deg) rotateX(9deg) rotateZ(2deg)}88%,100%{transform:rotateY(360deg) rotateX(0) rotateZ(-2deg)}} 
+.card:hover .inner{animation-play-state:paused} 
+.card img,.back{position:absolute;inset:0;width:100%;height:100%;border-radius:22px;backface-visibility:hidden} 
+.card img{object-fit:cover;border:2px solid #ffb7ec;box-shadow:0 0 28px #ff3fbd,0 18px 45px #000} 
+.back{display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#421252,#c62b91);transform:rotateY(180deg);font-size:23px;font-weight:bold;box-shadow:0 0 28px #ff3fbd} 
+footer{position:relative;z-index:2;text-align:center;padding:45px;color:#ffc8ed} 
+#audio{display:none} 
+@media(max-width:600px){ 
+ nav a{font-size:12px;margin:0 5px} 
+ .moon{width:140px;height:140px}.moon:after{font-size:58px;left:40px;top:44px} 
+ .card{height:300px} 
+} 
+ 
+/* ===== GIỮ GIAO DIỆN CŨ + ẢNH 3D LƠ LỬNG ===== */ 
+body{background:#03030d} 
+.old-home{ 
+  min-height:100vh; 
+  height:100vh; 
+  overflow:hidden; 
+  padding:0 18px; 
+  position:relative; 
+  background: 
+    radial-gradient(circle at 50% 50%,rgba(111,48,160,.16),transparent 25%), 
+    radial-gradient(circle at 50% 45%,rgba(255,54,190,.08),transparent 50%); 
+} 
+.old-home:before{ 
+  content:"kimanhiudau 💗"; 
+  position:absolute; 
+  z-index:12; 
+  top:22px; 
+  left:30px; 
+  font-size:22px; 
+  font-weight:800; 
+  color:#ff9bdd; 
+  text-shadow:0 0 8px #fff,0 0 22px #ff36bd,0 0 45px #ff36bd; 
+} 
+.home-center{ 
+  position:absolute; 
+  z-index:10; 
+  left:50%; 
+  top:50%; 
+  transform:translate(-50%,-50%); 
+  width:min(470px,82vw); 
+  display:flex; 
+  flex-direction:column; 
+  align-items:center; 
+  text-align:center; 
+} 
+.home-center .moon{ 
+  width:145px; 
+  height:145px; 
+  flex:none; 
+  box-shadow:0 0 30px #ffe995,0 0 90px #ffb84d99; 
+} 
+.home-center .moon:after{ 
+  font-size:58px; 
+  left:43px; 
+  top:48px; 
+} 
+.home-center p{margin:10px 0;font-size:clamp(17px,2.5vw,25px)} 
+.home-center h1{ 
+  margin:7px 0 9px; 
+  font-size:clamp(34px,6vw,64px); 
+  line-height:1.05; 
+} 
+.love-line{ 
+  margin-top:15px; 
+  font-weight:800; 
+  color:#ff91dc; 
+  text-shadow:0 0 10px #ff35bf,0 0 24px #ff35bf; 
+} 
+.orbit-photo{ 
+  position:absolute; 
+  z-index:6; 
+  width:150px; 
+  height:190px; 
+  left:50%; 
+  top:50%; 
+  margin-left:-75px; 
+  margin-top:-95px; 
+} 
+.photo3d{ 
+  width:100%; 
+  height:100%; 
+  padding:5px; 
+  border-radius:17px; 
+  background:linear-gradient(135deg,#fff,#ff77d5,#9d66ff); 
+  box-shadow:0 0 22px #ff42c0,0 14px 38px #000b; 
+  transform-style:preserve-3d; 
+  will-change:transform; 
+  animation:photo3D 5.8s ease-in-out infinite; 
+} 
+.photo3d img{ 
+  display:block; 
+  width:100%; 
+  height:100%; 
+  object-fit:cover; 
+  border-radius:12px; 
+  background:#151522; 
+  border:1px solid rgba(255,255,255,.9); 
+} 
+@keyframes photo3D{ 
+  0%,100%{transform:translateY(0) rotateX(7deg) rotateY(-22deg) rotateZ(-5deg)} 
+  25%{transform:translateY(-13px) rotateX(-4deg) rotateY(24deg) rotateZ(3deg)} 
+  50%{transform:translateY(-22px) rotateX(8deg) rotateY(38deg) rotateZ(6deg)} 
+  75%{transform:translateY(-10px) rotateX(-5deg) rotateY(-25deg) rotateZ(-3deg)} 
+} 
+.p1{transform:translate(-310px,-145px) rotate(-9deg)} 
+.p2{transform:translate(165px,-150px) rotate(9deg)} 
+.p3{transform:translate(-390px,20px) rotate(-12deg)} 
+.p4{transform:translate(260px,25px) rotate(12deg)} 
+.p5{transform:translate(-300px,190px) rotate(8deg)} 
+.p6{transform:translate(170px,190px) rotate(-8deg)} 
+.p7{transform:translate(-505px,-70px) rotate(-5deg)} 
+.p8{transform:translate(365px,-65px) rotate(6deg)} 
+.p2 .photo3d{animation-delay:.6s} 
+.p3 .photo3d{animation-delay:1.2s} 
+.p4 .photo3d{animation-delay:1.8s} 
+.p5 .photo3d{animation-delay:2.4s} 
+.p6 .photo3d{animation-delay:3s} 
+.p7 .photo3d{animation-delay:3.6s} 
+.p8 .photo3d{animation-delay:4.2s} 
+ 
+@media(max-width:900px){ 
+  .orbit-photo{width:105px;height:135px;margin-left:-52px;margin-top:-67px} 
+  .p1{transform:translate(-165px,-190px) rotate(-8deg)} 
+  .p2{transform:translate(65px,-190px) rotate(8deg)} 
+  .p3{transform:translate(-185px,-25px) rotate(-10deg)} 
+  .p4{transform:translate(85px,-25px) rotate(10deg)} 
+  .p5{transform:translate(-165px,175px) rotate(8deg)} 
+  .p6{transform:translate(65px,175px) rotate(-8deg)} 
+  .p7{transform:translate(-175px,55px) rotate(-5deg)} 
+  .p8{transform:translate(90px,55px) rotate(5deg)} 
+  .home-center{width:68vw} 
+  .home-center .moon{width:125px;height:125px} 
+  .home-center .moon:after{font-size:50px;left:37px;top:40px} 
+  .home-center h1{font-size:clamp(27px,7vw,44px)} 
+  .home-center p{font-size:15px} 
+  .home-center button{font-size:14px;padding:12px 20px} 
+  .love-line{font-size:13px} 
+  .old-home:before{font-size:18px;left:15px;top:18px} 
+} 
+ 
+ 
+/* ===== MÀN HÌNH MỞ THƯ TRUNG THU ===== */ 
+#intro{ 
+  position:fixed; 
+  inset:0; 
+  z-index:9999; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  background: 
+    radial-gradient(circle at 50% 48%,rgba(255,45,190,.13),transparent 28%), 
+    radial-gradient(circle at 50% 50%,#11101d 0,#070711 48%,#02020a 100%); 
+  transition:opacity .7s ease,visibility .7s ease; 
+} 
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none} 
+#introStars{position:absolute;inset:0;overflow:hidden} 
+.intro-star{ 
+  position:absolute;width:2px;height:2px;border-radius:50%; 
+  background:#fff;opacity:.65;animation:introTwinkle 2.5s infinite; 
+} 
+@keyframes introTwinkle{50%{opacity:1;transform:scale(1.8)}} 
+.intro-box{ 
+  position:relative;z-index:2; 
+  text-align:center; 
+  padding:34px 30px; 
+} 
+.intro-heart{ 
+  font-size:54px; 
+  margin-bottom:18px; 
+  filter:drop-shadow(0 0 18px #ff3fc4); 
+  animation:introFloat 2.4s ease-in-out infinite; 
+} 
+.intro-box button{ 
+  min-width:280px; 
+  border:2px solid #fff; 
+  background:rgba(115,30,100,.5); 
+  box-shadow:0 0 18px #ff39c4,0 0 42px #ff39c477; 
+} 
+@keyframes introFloat{50%{transform:translateY(-10px) scale(1.05)}} 
+body.locked{overflow:hidden} 
+ 
+</style> 
+</head> 
+<body class="locked"> 
+ 
+<div id="intro"> 
+  <div id="introStars"></div> 
+  <div class="intro-box"> 
+    <div class="intro-heart">💗</div> 
+    <button type="button" id="openLetter">💗 Mở thư Trung Thu 💗</button> 
+  </div> 
+</div> 
+ 
+<div id="stars"></div> 
+<div class="lantern l1">🏮</div><div class="lantern l2">🏮</div><div class="lantern l3">🏮</div><div class="lantern l4">🏮</div> 
+ 
+<nav> 
+<a href="#home">Trang chủ</a> 
+<a href="#wish">Lời chúc</a> 
+<a href="#letter">💌 Lá thư</a>
+<a href="#memories">Kỷ niệm</a> 
+</nav> 
+ 
+<section class="hero old-home" id="home"> 
+  <div class="orbit-photo p1"><div class="photo3d"><img src="photo1.jpg" alt="Kỷ niệm 1"></div></div> 
+  <div class="orbit-photo p2"><div class="photo3d"><img src="photo2.jpg" alt="Kỷ niệm 2"></div></div> 
+  <div class="orbit-photo p3"><div class="photo3d"><img src="photo3.jpg" alt="Kỷ niệm 3"></div></div> 
+  <div class="orbit-photo p4"><div class="photo3d"><img src="photo4.jpg" alt="Kỷ niệm 4"></div></div> 
+  <div class="orbit-photo p5"><div class="photo3d"><img src="photo5.jpg" alt="Kỷ niệm 5"></div></div> 
+  <div class="orbit-photo p6"><div class="photo3d"><img src="photo6.jpg" alt="Kỷ niệm 6"></div></div> 
+  <div class="orbit-photo p7"><div class="photo3d"><img src="photo7.jpg" alt="Kỷ niệm 7"></div></div> 
+  <div class="orbit-photo p8"><div class="photo3d"><img src="photo8.jpg" alt="Kỷ niệm 8"></div></div> 
+ 
+  <div class="home-center"> 
+    <div class="moon"></div> 
+    <p>cảm ơn vì tất cả 💗</p> 
+    <h1>Trung Thu vui vẻ ✨</h1> 
+    <p>iu  nhiều lắm 💕<br>mãi bên nhau nhé</p> 
+    <button id="play" onclick="startMusic()">💗 Mở thư Trung Thu 💗</button> 
+    <div class="love-line">🐰 kimanhiudau · i love you 💗</div> 
+  </div> 
+</section> 
+ 
+<section id="wish"> 
+<h2>Gửi 🐰 kimanhiudau 💗</h2> 
+<p class="message">Chúc cậu một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. Cảm ơn vì tất cả. Mong chúng ta luôn ở bên nhau và có thật nhiều kỷ niệm đẹp. 🌙🐰✨</p> 
+</section> 
 
-        /* CSS cho hiệu ứng pháo hoa */
-        #fireworksCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Cho phép click xuyên qua canvas */
-            z-index: 9999; /* Đảm bảo hiển thị trên cùng */
-        }
-    </style>
-</head>
-<body>
-    <!-- Container cho phong bì -->
-    <div class="envelope-container">
-        <div class="envelope" id="envelope">
-            <div class="envelope-flap"></div>
-            <div class="envelope-content">
-                <div class="letter">
-                    <h2>Trung Thu đến rồi...</h2>
-                    <p>Anh chúc em của anh một ngày Lễ Trung Thu thật vui vẻ và hạnh phúc. Luôn vui vẻ yêu đời.</p>
-                </div>
-            </div>
-        </div>
+<!-- ===== LÁ THƯ ===== -->
+<section id="letter">
+
+  <div class="letter-wrap">
+
+    <div class="letter-icon">💌</div>
+
+    <h2>Một lá thư dành cho em 💗</h2>
+
+    <button
+      type="button"
+      class="open-real-letter"
+      id="openRealLetter">
+      💗 Mở lá thư 💗
+    </button>
+
+    <div class="letter-paper" id="realLetter">
+
+      <div class="letter-title">
+        Gửi Minh Châu 🐰💗
+      </div>
+
+      <p>
+        Trung Thu này mình không có món quà gì quá đặc biệt,
+        chỉ muốn gửi đến em một lời chúc thật dịu dàng. 🌙
+      </p>
+
+      <p>
+        Cảm ơn em vì những khoảnh khắc vui vẻ,
+        những kỷ niệm đẹp và vì đã xuất hiện trong cuộc sống của mình. 💕
+      </p>
+
+      <p>
+        Mong rằng mùa Trung Thu này em luôn vui vẻ,
+        luôn cười thật nhiều và mỗi ngày đều có những điều
+        khiến em hạnh phúc. ✨
+      </p>
+
+      <p>
+        Hy vọng chúng ta sẽ có thêm thật nhiều kỷ niệm đẹp
+        để sau này nhìn lại vẫn có thể mỉm cười. 🌙🐰
+      </p>
+
+      <div class="letter-sign">
+        Thương  nhiều 💗<br>
+        — kimanhiudau 🐰
+      </div>
+
     </div>
 
-    <!-- Hiệu ứng pháo hoa -->
-    <canvas id="fireworksCanvas"></canvas>
+  </div>
 
-    <script>
-        // --- Khởi tạo và điều khiển hiệu ứng pháo hoa ---
-        const canvasFireworks = document.getElementById('fireworksCanvas');
-        const ctxFireworks = canvasFireworks.getContext('2d');
-        canvasFireworks.width = window.innerWidth;
-        canvasFireworks.height = window.innerHeight;
+</section>
 
-        let fireworks = []; // Mảng chứa các quả pháo hoa
-        let isFireworksRunning = true; // Biến theo dõi trạng thái chạy của pháo hoa
+<section id="memories"> 
+<h2>Những khoảnh khắc 💞</h2> 
+<div class="gallery"> 
+<div class="card"><div class="inner"><img src="photo1.jpg" alt="Kỷ niệm 1"><div class="back">💗 Mãi bên nhau nhé</div></div></div> 
+<div class="card"><div class="inner"><img src="photo2.jpg" alt="Kỷ niệm 2"><div class="back">🌙 Trung Thu vui vẻ</div></div></div> 
+<div class="card"><div class="inner"><img src="photo3.jpg" alt="Kỷ niệm 3"><div class="back">✨ I love you</div></div></div> 
+<div class="card"><div class="inner"><img src="photo4.jpg" alt="Kỷ niệm 4"><div class="back">🐰  kimanhiudau 💗</div></div></div> 
+<div class="card"><div class="inner"><img src="photo5.jpg" alt="Kỷ niệm 5"><div class="back">💕 Thương cậu nhiều</div></div></div> 
+<div class="card"><div class="inner"><img src="photo6.jpg" alt="Kỷ niệm 6"><div class="back">✨ Cùng nhau nhé</div></div></div> 
+<div class="card"><div class="inner"><img src="photo7.jpg" alt="Kỷ niệm 7"><div class="back">🌙 Một mùa Trung Thu</div></div></div> 
+<div class="card"><div class="inner"><img src="photo8.jpg" alt="Kỷ niệm 8"><div class="back">💗 Love you</div></div></div> 
+</div> 
+</section> 
+ 
+<audio id="audio" src="music.mp3" loop preload="auto"></audio> 
+<footer>🐰 kimanhiudau · i love you 💗</footer> 
+ 
+<script> 
+for(let i=0;i<160;i++){ 
+ const s=document.createElement("i"); 
+ s.className="star"; 
+ s.style.left=(Math.random()*100)+"%"; 
+ s.style.top=(Math.random()*100)+"%"; 
+ s.style.animationDelay=(Math.random()*2)+"s"; 
+ document.getElementById("stars").appendChild(s); 
+} 
+function startMusic(){ 
+ const audio=document.getElementById("audio"); 
+ audio.play().then(()=>{ 
+   document.getElementById("play").textContent="🎵 Đang phát nhạc 💗"; 
+ }).catch(()=>{ 
+   document.getElementById("play").textContent="🎵 Bấm lại để phát nhạc"; 
+ }); 
+} 
+ 
+// Màn hình mở thư: bấm nút mới vào trang và cho phép nhạc phát. 
+(function(){ 
+  const intro=document.getElementById("intro"); 
+  const btn=document.getElementById("openLetter"); 
+  const box=document.getElementById("introStars"); 
+  for(let i=0;i<90;i++){ 
+    const s=document.createElement("i"); 
+    s.className="intro-star"; 
+    s.style.left=(Math.random()*100)+"%"; 
+    s.style.top=(Math.random()*100)+"%"; 
+    s.style.animationDelay=(Math.random()*2.5)+"s"; 
+    box.appendChild(s); 
+  } 
+  btn.addEventListener("click",function(){ 
+    document.body.classList.remove("locked"); 
+    intro.classList.add("hide"); 
+    if(typeof startMusic==="function"){ 
+      startMusic(); 
+    } 
+    setTimeout(()=>intro.remove(),800); 
+  }); 
+})(); 
+ 
+</script> 
+    // Mở / đóng lá thư
+const openRealLetter = document.getElementById("openRealLetter");
+const realLetter = document.getElementById("realLetter");
 
-        // Hàm tạo một tia lửa
-        function Spark(x, y, color, size, speedX, speedY) {
-            this.x = x;
-            this.y = y;
-            this.color = color;
-            this.size = size;
-            this.speedX = speedX;
-            this.speedY = speedY;
-            this.life = Math.random() * 60 + 30; // Thời gian tồn tại
-            this.gravity = 0.05; // Lực hấp dẫn ảnh hưởng đến tia lửa
-        }
+openRealLetter.addEventListener("click", function(){
 
-        Spark.prototype.update = function() {
-            this.x += this.speedX;
-            this.y += this.speedY + this.gravity;
-            this.size *= 0.96; // Giảm dần kích thước
-            this.life--; // Giảm dần thời gian tồn tại
-        };
+  realLetter.classList.toggle("show");
 
-        Spark.prototype.draw = function(ctx) {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = this.color;
-            ctx.fill();
-        };
+  if(realLetter.classList.contains("show")){
+    openRealLetter.textContent = "💌 Đóng lá thư";
+  }else{
+    openRealLetter.textContent = "💗 Mở lá thư 💗";
+  }
 
-        // Hàm tạo một quả pháo hoa
-        function Firework(x, y) {
-            this.x = x;
-            this.y = y;
-            this.sparks = []; // Mảng các tia lửa của quả pháo hoa này
-            const numSparks = Math.floor(Math.random() * 50) + 50; // Số lượng tia lửa ngẫu nhiên
-            const colors = ['#ff5733', '#33ff57', '#5733ff', '#f4ff33', '#ff33e3', '#fff']; // Các màu sắc pháo hoa
-            for (let i = 0; i < numSparks; i++) {
-                const angle = Math.random() * Math.PI * 2; // Góc bắn ngẫu nhiên
-                const speed = Math.random() * 5 + 2; // Tốc độ ngẫu nhiên
-                const color = colors[Math.floor(Math.random() * colors.length)]; // Chọn màu ngẫu nhiên
-                this.sparks.push(new Spark(x, y, color, Math.random() * 3 + 1, Math.cos(angle) * speed, Math.sin(angle) * speed));
-            }
-        }
-
-        Firework.prototype.update = function() {
-            this.sparks.forEach(spark => spark.update());
-            // Loại bỏ các tia lửa đã hết vòng đời
-            this.sparks = this.sparks.filter(spark => spark.life > 0);
-        };
-
-        Firework.prototype.draw = function(ctx) {
-            this.sparks.forEach(spark => spark.draw(ctx));
-        };
-
-        // Hàm chính để vẽ hiệu ứng hoạt ảnh
-        function animate() {
-            if (!isFireworksRunning) return; // Nếu đang tạm dừng, không vẽ nữa
-
-            // Làm mờ khung hình trước để tạo hiệu ứng đuôi pháo hoa
-            ctxFireworks.fillStyle = 'rgba(0, 0, 0, 0.1)';
-            ctxFireworks.fillRect(0, 0, canvasFireworks.width, canvasFireworks.height);
-
-            // Cập nhật và vẽ từng quả pháo hoa
-            fireworks.forEach((firework, index) => {
-                firework.update();
-                firework.draw(ctxFireworks);
-                // Loại bỏ quả pháo hoa đã nổ hết tia lửa
-                if (firework.sparks.length === 0) {
-                    fireworks.splice(index, 1);
-                }
-            });
-
-            requestAnimationFrame(animate); // Yêu cầu khung hình tiếp theo
-        }
-
-        // Xử lý khi thay đổi kích thước cửa sổ
-        window.addEventListener('resize', () => {
-            canvasFireworks.width = window.innerWidth;
-            canvasFireworks.height = window.innerHeight;
-        });
-
-        // Thêm pháo hoa khi click vào canvas
-        canvasFireworks.addEventListener('click', (e) => {
-            fireworks.push(new Firework(e.clientX, e.clientY));
-        });
-
-        // Khởi tạo hiệu ứng khi trang tải xong
-        window.addEventListener('load', () => {
-            animate(); // Bắt đầu vòng lặp hoạt ảnh
-            // Thêm một vài pháo hoa ban đầu để trang trí
-            for (let i = 0; i < 3; i++) {
-                setTimeout(() => {
-                    fireworks.push(new Firework(Math.random() * window.innerWidth, Math.random() * window.innerHeight / 2));
-                }, i * 1000); // Hiển thị cách nhau 1 giây
-            }
-        });
-
-        // Hàm để tạm dừng hoặc tiếp tục hiệu ứng pháo hoa
-        function toggleFireworks() {
-            isFireworksRunning = !isFireworksRunning;
-            if (isFireworksRunning) {
-                animate(); // Nếu bật lại, bắt đầu chạy lại
-            }
-        }
-
-        // --- Xử lý sự kiện mở phong bì ---
-        const envelope = document.getElementById('envelope');
-        if (envelope) {
-            envelope.addEventListener('click', () => {
-                envelope.classList.toggle('open'); // Thêm/xóa lớp 'open' để kích hoạt animation
-            });
-        } else {
-            console.error("Không tìm thấy phần tử phong bì với ID 'envelope'");
-        }
-    </script>
-</body>
+});
+</body> 
 </html>
