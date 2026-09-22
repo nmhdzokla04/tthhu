@@ -263,61 +263,57 @@ body.locked{overflow:hidden}
 <h2>Gửi 🐰 kimanhiudau 💗</h2> 
 <p class="message">Chúc cậu một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. Cảm ơn vì tất cả. Mong chúng ta luôn ở bên nhau và có thật nhiều kỷ niệm đẹp. 🌙🐰✨</p> 
 </section> 
+<section id="letter" class="letter-section">
 
-<!-- ===== LÁ THƯ ===== -->
-<section id="letter">
+  <div class="envelope-area">
 
-  <div class="letter-wrap">
+    <h2>💌 Một lá thư dành cho em</h2>
 
-    <div class="letter-icon">💌</div>
+    <div class="envelope" id="envelope">
 
-    <h2>Một lá thư dành cho em 💗</h2>
+      <div class="letter-sheet">
 
-    <button
-      type="button"
-      class="open-real-letter"
-      id="openRealLetter">
-      💗 Mở lá thư 💗
-    </button>
+        <h3>Gửi Minh Châu 🐰💗</h3>
 
-    <div class="letter-paper" id="realLetter">
+        <p>
+          Trung Thu này mình không có món quà gì quá đặc biệt,
+          chỉ muốn gửi đến em một lời chúc thật dịu dàng. 🌙
+        </p>
 
-      <div class="letter-title">
-        Gửi Minh Châu 🐰💗
+        <p>
+          Cảm ơn em vì những khoảnh khắc vui vẻ,
+          những kỷ niệm đẹp và vì đã xuất hiện trong cuộc sống của mình. 💕
+        </p>
+
+        <p>
+          Mong em luôn vui vẻ, luôn cười thật nhiều
+          và mỗi ngày đều có những điều khiến em hạnh phúc. ✨
+        </p>
+
+        <div class="letter-sign">
+          Thương em nhiều 💗<br>
+          — kimanhiudau 🐰
+        </div>
+
       </div>
 
-      <p>
-        Trung Thu này mình không có món quà gì quá đặc biệt,
-        chỉ muốn gửi đến em một lời chúc thật dịu dàng. 🌙
-      </p>
+      <div class="envelope-body"></div>
 
-      <p>
-        Cảm ơn em vì những khoảnh khắc vui vẻ,
-        những kỷ niệm đẹp và vì đã xuất hiện trong cuộc sống của mình. 💕
-      </p>
+      <div class="envelope-flap"></div>
 
-      <p>
-        Mong rằng mùa Trung Thu này em luôn vui vẻ,
-        luôn cười thật nhiều và mỗi ngày đều có những điều
-        khiến em hạnh phúc. ✨
-      </p>
-
-      <p>
-        Hy vọng chúng ta sẽ có thêm thật nhiều kỷ niệm đẹp
-        để sau này nhìn lại vẫn có thể mỉm cười. 🌙🐰
-      </p>
-
-      <div class="letter-sign">
-        Thương  nhiều 💗<br>
-        — kimanhiudau 🐰
+      <div class="envelope-heart">
+        💗
       </div>
 
+    </div>
+
+    <div class="letter-hint">
+      👆 Bấm vào phong bì để mở thư
     </div>
 
   </div>
 
 </section>
-
 <section id="memories"> 
 <h2>Những khoảnh khắc 💞</h2> 
 <div class="gallery"> 
@@ -377,20 +373,19 @@ function startMusic(){
 })(); 
  
 </script> 
-    // Mở / đóng lá thư
-const openRealLetter = document.getElementById("openRealLetter");
-const realLetter = document.getElementById("realLetter");
+   // Mở phong bì
+const envelope = document.getElementById("envelope");
 
-openRealLetter.addEventListener("click", function(){
+envelope.addEventListener("click", function(){
+  envelope.classList.toggle("open");
 
-  realLetter.classList.toggle("show");
-
-  if(realLetter.classList.contains("show")){
-    openRealLetter.textContent = "💌 Đóng lá thư";
+  if(envelope.classList.contains("open")){
+    document.querySelector(".letter-hint").textContent =
+      "💌 Lá thư của em đây 💗";
   }else{
-    openRealLetter.textContent = "💗 Mở lá thư 💗";
+    document.querySelector(".letter-hint").textContent =
+      "👆 Bấm vào phong bì để mở thư";
   }
-
 });
 </body> 
 </html>
