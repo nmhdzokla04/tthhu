@@ -229,6 +229,43 @@ body.locked{overflow:hidden}
   </div>
 </div>
 
+</div>
+
+<!-- ===== LÁ THƯ ===== -->
+<div id="letterModal">
+  <div class="letter">
+
+    <button class="letter-close" id="closeLetter">×</button>
+
+    <div class="letter-moon">🌙</div>
+
+    <h2>Trung Thu đến rồi... 🐰</h2>
+
+    <p>
+      Anh chúc em bé của anh có một ngày lễ Trung Thu
+      thật vui vẻ và hạnh phúc.
+    </p>
+
+    <p>
+      Luôn vui vẻ, yêu đời và tràn đầy những điều
+      tốt đẹp nhé. 💗
+    </p>
+
+    <p>
+      Cảm ơn em vì đã xuất hiện trong cuộc sống của anh.
+      Mong chúng ta sẽ luôn có thật nhiều kỷ niệm đẹp
+      cùng nhau. ✨
+    </p>
+
+    <p>
+      <b>Trung Thu vui vẻ nhé, em bé của anh! 💕</b>
+    </p>
+
+    <div class="letter-bunny">🐰🌙</div>
+
+  </div>
+</div>
+
 <div id="stars"></div>
 <div class="lantern l1">🏮</div><div class="lantern l2">🏮</div><div class="lantern l3">🏮</div><div class="lantern l4">🏮</div>
 
@@ -269,8 +306,8 @@ body.locked{overflow:hidden}
 <div class="card"><div class="inner"><img src="photo1.jpg" alt="Kỷ niệm 1"><div class="back">💗 Mãi bên nhau nhé</div></div></div>
 <div class="card"><div class="inner"><img src="photo2.jpg" alt="Kỷ niệm 2"><div class="back">🌙 Trung Thu vui vẻ</div></div></div>
 <div class="card"><div class="inner"><img src="photo3.jpg" alt="Kỷ niệm 3"><div class="back">✨ I love you</div></div></div>
-<div class="card"><div class="inner"><img src="photo4.jpg" alt="Kỷ niệm 4"><div class="back">🐰 Minh Châu 💗</div></div></div>
-<div class="card"><div class="inner"><img src="photo5.jpg" alt="Kỷ niệm 5"><div class="back">💕 Thương em nhiều</div></div></div>
+<div class="card"><div class="inner"><img src="photo4.jpg" alt="Kỷ niệm 4"><div class="back">🐰 Kimanhiudau 💗</div></div></div>
+<div class="card"><div class="inner"><img src="photo5.jpg" alt="Kỷ niệm 5"><div class="back">💕 Thương  nhiều</div></div></div>
 <div class="card"><div class="inner"><img src="photo6.jpg" alt="Kỷ niệm 6"><div class="back">✨ Cùng nhau nhé</div></div></div>
 <div class="card"><div class="inner"><img src="photo7.jpg" alt="Kỷ niệm 7"><div class="back">🌙 Một mùa Trung Thu</div></div></div>
 <div class="card"><div class="inner"><img src="photo8.jpg" alt="Kỷ niệm 8"><div class="back">💗 Love you</div></div></div>
@@ -297,28 +334,72 @@ function startMusic(){
    document.getElementById("play").textContent="🎵 Bấm lại để phát nhạc";
  });
 }
-
-// Màn hình mở thư: bấm nút mới vào trang và cho phép nhạc phát.
+function openMainLetter(){
+  document.getElementById("letterModal").classList.add("show");
+  startMusic();
+}
+// // ===== HỆ THỐNG MỞ / ĐÓNG LÁ THƯ =====
 (function(){
-  const intro=document.getElementById("intro");
-  const btn=document.getElementById("openLetter");
-  const box=document.getElementById("introStars");
-  for(let i=0;i<90;i++){
-    const s=document.createElement("i");
-    s.className="intro-star";
-    s.style.left=(Math.random()*100)+"%";
-    s.style.top=(Math.random()*100)+"%";
-    s.style.animationDelay=(Math.random()*2.5)+"s";
+
+  const intro = document.getElementById("intro");
+  const introBtn = document.getElementById("openLetter");
+
+  const modal = document.getElementById("letterModal");
+  const closeBtn = document.getElementById("closeLetter");
+
+  // Sao intro
+  const box = document.getElementById("introStars");
+
+  for(let i = 0; i < 90; i++){
+    const s = document.createElement("i");
+
+    s.className = "intro-star";
+    s.style.left = (Math.random()*100) + "%";
+    s.style.top = (Math.random()*100) + "%";
+    s.style.animationDelay = (Math.random()*2.5) + "s";
+
     box.appendChild(s);
   }
-  btn.addEventListener("click",function(){
+
+  // Hàm mở thư
+  function openLetter(){
+
     document.body.classList.remove("locked");
+
+    // đóng màn hình ban đầu
     intro.classList.add("hide");
-    if(typeof startMusic==="function"){
-      startMusic();
+
+    // hiện lá thư
+    setTimeout(function(){
+      modal.classList.add("show");
+    },350);
+
+    // phát nhạc
+    startMusic();
+  }
+
+  // Hàm đóng thư
+  function closeLetter(){
+
+    modal.classList.remove("show");
+
+  }
+
+  // Nút mở thư ở màn hình đầu
+  introBtn.addEventListener("click", openLetter);
+
+  // Nút X trên lá thư
+  closeBtn.addEventListener("click", closeLetter);
+
+  // Bấm ra ngoài lá thư cũng đóng
+  modal.addEventListener("click", function(e){
+
+    if(e.target === modal){
+      closeLetter();
     }
-    setTimeout(()=>intro.remove(),800);
+
   });
+
 })();
 
 </script>
