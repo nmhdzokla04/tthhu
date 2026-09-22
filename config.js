@@ -2,10 +2,10 @@ window.SITE_CONFIG = {
   title: "kimanhiudau 💗",
   brand: "kimanhiudau 💗",
   texts: [
-    "i love you 💗",
+    "I love you <3 💗",
     "trung thu vui vẻ ✨",
-    "iu em nhiều lắm 💕",
-    "mãi bên nhau nhé",
+    "Mệt thì tựa vào tớ nhé 💕",
+    "Có tớ đây rồi, đừng lo",
     "🐰 kimanhiudau · i love you 💗"
   ],
   photos: [
@@ -14,8 +14,8 @@ window.SITE_CONFIG = {
   ],
   music: "assets/music.mp3",
   wish: {
-    title: "Gửi em 💗",
-    p1: "Chúc em một mùa Trung Thu thật vui và thật hạnh phúc.",
+    title: "Gửi kimanhiudau 💗",
+    p1: "Chúc  một mùa Trung Thu thật vui và thật hạnh phúc.",
     p2: "Cảm ơn em vì những khoảnh khắc đáng nhớ.",
     p3: "Mong chúng mình luôn vui vẻ và ở bên nhau nhé 💕"
   },
