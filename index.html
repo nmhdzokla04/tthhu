@@ -421,6 +421,62 @@ function startMusic(){
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",setup);
   else setup();
 })();
+ 
+ <style id="typewriter-letter-style">
+.letter-paper .typewriter-target{min-height:1.2em}
+.letter-paper .typewriter-target.typing::after{content:"▋";display:inline-block;margin-left:2px;animation:letterCaret .75s steps(1) infinite;color:#df2c91}
+@keyframes letterCaret{0%,49%{opacity:1}50%,100%{opacity:0}}
+</style>
+<script id="typewriter-letter">
+(function(){
+  var modal=document.getElementById('letterModal');
+  if(!modal) return;
+  var paper=modal.querySelector('.letter-paper');
+  if(!paper) return;
+  var targets=Array.from(paper.querySelectorAll('h2, p, .letter-sign'));
+  targets.forEach(function(el){
+    el.dataset.original=el.textContent;
+    el.classList.add('typewriter-target');
+  });
+  var timerIds=[];
+  var run=0;
+  function clearTimers(){timerIds.forEach(clearTimeout);timerIds=[];}
+  function typeText(el,text,token,done){
+    el.textContent='';
+    el.classList.add('typing');
+    var i=0;
+    function step(){
+      if(token!==run) return;
+      if(i<text.length){
+        el.textContent+=text.charAt(i++);
+        timerIds.push(setTimeout(step, Math.max(18, text.length>80?28:35)));
+      }else{
+        el.classList.remove('typing');
+        done();
+      }
+    }
+    step();
+  }
+  function startTyping(){
+    clearTimers();
+    run++;
+    var token=run;
+    targets.forEach(function(el){el.textContent='';el.classList.remove('typing');});
+    var index=0;
+    function next(){
+      if(token!==run || index>=targets.length) return;
+      var el=targets[index++];
+      var text=el.dataset.original||'';
+      typeText(el,text,token,function(){timerIds.push(setTimeout(next,180));});
+    }
+    setTimeout(next,350);
+  }
+  var observer=new MutationObserver(function(){
+    if(modal.classList.contains('show')) startTyping();
+    else {clearTimers();run++;}
+  });
+  observer.observe(modal,{attributes:true,attributeFilter:['class']});
+ })();
 </script>
 </body>
 </html>
