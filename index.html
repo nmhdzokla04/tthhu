@@ -241,6 +241,7 @@ body.locked{overflow:hidden}
 <nav>
 <a href="#home">Trang chủ</a>
 <a href="#wish">Lời chúc</a>
+ <a href="#letters">Thư</a>
 <a href="#memories">Kỷ niệm</a>
 </nav>
 
@@ -256,27 +257,27 @@ body.locked{overflow:hidden}
 
   <div class="home-center">
     <div class="moon"></div>
-    <p>cảm ơn em vì tất cả 💗</p>
+    <p>Trung thu an lành nhé💗</p>
     <h1>Trung Thu vui vẻ ✨</h1>
-    <p>iu em nhiều lắm 💕<br>mãi bên nhau nhé</p>
+    <p>iu cậu nhiều lắm 💕<br></p>
     <button id="play" onclick="startMusic()">💗 Mở thư Trung Thu 💗</button>
     <div class="love-line">🐰 kimanhiudau · i love you 💗</div>
   </div>
 </section>
 
 <section id="wish">
-<h2>Gửi Minh Châu 💗</h2>
-<p class="message">Chúc em một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. Cảm ơn em vì tất cả. Mong chúng ta luôn ở bên nhau và có thật nhiều kỷ niệm đẹp. 🌙🐰✨</p>
+<h2>Gửi 🐰 kimanhiudau 💗</h2>
+<p class="message">Chúc cậu một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. Mong chúng ta luôn ở bên nhau và có thật nhiều kỷ niệm đẹp. 🌙🐰✨</p>
 </section>
 
 <section id="memories">
 <h2>Những khoảnh khắc 💞</h2>
 <div class="gallery">
-<div class="card"><div class="inner"><img src="photo1.jpg" alt="Kỷ niệm 1"><div class="back">💗 Mãi bên nhau nhé</div></div></div>
+<div class="card"><div class="inner"><img src="photo1.jpg" alt="Kỷ niệm 1"><div class="back">💗 Có tớ đây rồi, đừng lo</div></div></div>
 <div class="card"><div class="inner"><img src="photo2.jpg" alt="Kỷ niệm 2"><div class="back">🌙 Trung Thu vui vẻ</div></div></div>
 <div class="card"><div class="inner"><img src="photo3.jpg" alt="Kỷ niệm 3"><div class="back">✨ I love you</div></div></div>
-<div class="card"><div class="inner"><img src="photo4.jpg" alt="Kỷ niệm 4"><div class="back">🐰 Minh Châu 💗</div></div></div>
-<div class="card"><div class="inner"><img src="photo5.jpg" alt="Kỷ niệm 5"><div class="back">💕 Thương em nhiều</div></div></div>
+<div class="card"><div class="inner"><img src="photo4.jpg" alt="Kỷ niệm 4"><div class="back">🐰 kimanhiudau 💗</div></div></div>
+<div class="card"><div class="inner"><img src="photo5.jpg" alt="Kỷ niệm 5"><div class="back">💕 I love you <3</div></div></div>
 <div class="card"><div class="inner"><img src="photo6.jpg" alt="Kỷ niệm 6"><div class="back">✨ Cùng nhau nhé</div></div></div>
 <div class="card"><div class="inner"><img src="photo7.jpg" alt="Kỷ niệm 7"><div class="back">🌙 Một mùa Trung Thu</div></div></div>
 <div class="card"><div class="inner"><img src="photo8.jpg" alt="Kỷ niệm 8"><div class="back">💗 Love you</div></div></div>
@@ -346,5 +347,18 @@ function startMusic(){
  setTimeout(burst,900);setInterval(burst,2300);loop();
 })();
 </script>
+ /* ===== BẤM PHONG BÌ ĐỂ MỞ / ĐÓNG THƯ ===== */
+const envelope=document.getElementById("envelope");
+const letterHint=document.getElementById("letterHint");
+
+envelope.addEventListener("click",function(){
+  const isOpen=envelope.classList.toggle("open");
+
+  if(isOpen){
+    letterHint.textContent="💌 Lá thư dành cho cậu 💗";
+  }else{
+    letterHint.textContent="👆 Bấm vào phong bì để mở thư";
+  }
+});
 </body>
 </html>
