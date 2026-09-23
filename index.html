@@ -178,7 +178,7 @@ body{background:#03030d}
 
 
 /* ===== MÀN HÌNH MỞ THƯ TRUNG THU ===== */
-.letter-fab{position:fixed;right:22px;bottom:22px;z-index:10001;width:58px;height:58px;padding:0;font-size:28px;display:flex;align-items:center;justify-content:center}
+
 .letter-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(7px)}
 .letter-modal.show{display:flex}
 .letter-paper{position:relative;width:min(520px,92vw);padding:34px 30px 30px;border-radius:22px;background:linear-gradient(145deg,#fff8fc,#ffdff1);color:#5b1648;box-shadow:0 0 35px #ff42c0,0 25px 80px #000;transform:rotate(-1deg);animation:letterIn .45s ease}
@@ -242,6 +242,11 @@ body.locked{overflow:hidden}
 @keyframes letterHeart{0%,100%{transform:translate(-50%,-35%) scale(1)}50%{transform:translate(-50%,-35%) scale(1.12)}}
 @media(max-width:600px){.letter-modal{padding-top:60px}.letter-scene{width:97vw;height:650px;min-height:530px}.envelope{width:86vw;height:245px}.letter-paper{width:86vw;height:370px;bottom:95px;padding:28px 22px 22px}.letter-modal.show .letter-paper{transform:translate(-50%,-125px)}.letter-paper h2{font-size:21px}.letter-paper p{font-size:15px;line-height:1.6}.letter-close{top:72px;right:14px}}
 </style>
+<style id="nav-letter-style">
+#navLetter{cursor:pointer!important;pointer-events:auto!important}
+#fireworks{pointer-events:none!important}
+.letter-modal{z-index:10000!important}
+</style>
 </head>
 <body class="locked">
 
@@ -259,6 +264,7 @@ body.locked{overflow:hidden}
 <nav>
 <a href="#home">Trang chủ</a>
 <a href="#wish">Lời chúc</a>
+<a href="#letter" id="navLetter">💌 Lá thư</a>
 <a href="#memories">Kỷ niệm</a>
 </nav>
 
@@ -301,7 +307,7 @@ body.locked{overflow:hidden}
 </div>
 </section>
 
-<button id="letterBtn" class="letter-fab" type="button" aria-label="Mở lá thư">💌</button>
+
 <div id="letterModal" class="letter-modal" aria-hidden="true">
   <button id="closeLetter" class="letter-close" type="button" aria-label="Đóng thư">×</button>
   <div class="letter-scene">
@@ -381,7 +387,7 @@ function startMusic(){
 
 <!-- ===== PHÁO HOA ===== -->
 <canvas id="fireworks" aria-hidden="true"></canvas>
-<style>#fireworks{position:fixed;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}.letter-fab{z-index:10001!important;position:fixed;pointer-events:auto}</style>
+<style>#fireworks{position:fixed;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}</style>
 <script>
 (function(){
  const c=document.getElementById('fireworks'); if(!c)return; const x=c.getContext('2d'); let w,h,ps=[];
@@ -389,6 +395,31 @@ function startMusic(){
  function burst(){const X=innerWidth*(.15+Math.random()*.7),Y=innerHeight*(.12+Math.random()*.42),col=`hsl(${Math.random()*360},100%,70%)`;for(let i=0;i<75;i++){let a=Math.random()*Math.PI*2,s=1.5+Math.random()*5;ps.push({x:X,y:Y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,c:col})}}
  function loop(){x.clearRect(0,0,innerWidth,innerHeight);ps=ps.filter(p=>p.life>0);for(const p of ps){p.x+=p.vx;p.y+=p.vy;p.vy+=.045;p.life-=.012;x.globalAlpha=p.life;x.fillStyle=p.c;x.beginPath();x.arc(p.x,p.y,2,0,7);x.fill()}x.globalAlpha=1;requestAnimationFrame(loop)}
  setTimeout(burst,900);setInterval(burst,2300);loop();
+})();
+</script>
+<script id="nav-letter-handler">
+(function(){
+  function setup(){
+    var nav=document.getElementById("navLetter");
+    var modal=document.getElementById("letterModal");
+    var close=document.getElementById("closeLetter");
+    if(!nav || !modal) return;
+    function openLetter(e){
+      if(e)e.preventDefault();
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden","false");
+    }
+    function closeLetter(){
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden","true");
+    }
+    nav.addEventListener("click",openLetter);
+    if(close) close.addEventListener("click",closeLetter);
+    modal.addEventListener("click",function(e){ if(e.target===modal) closeLetter(); });
+    document.addEventListener("keydown",function(e){ if(e.key==="Escape") closeLetter(); });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",setup);
+  else setup();
 })();
 </script>
 </body>
