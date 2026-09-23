@@ -329,11 +329,52 @@ function startMusic(){
     if(btn)btn.textContent="🔇 Tạm dừng nhạc";
   }
 }
+// Nút "Mở thư Trung Thu" ở màn hình đầu:
+// chỉ đóng màn hình mở đầu và bắt đầu nhạc, KHÔNG mở thư modal.
 (function(){
-  const b=document.getElementById("letterBtn"),m=document.getElementById("letterModal"),c=document.getElementById("closeLetter");
-  if(b)b.onclick=()=>m.classList.add("show");
-  if(c)c.onclick=()=>m.classList.remove("show");
-  if(m)m.onclick=e=>{if(e.target===m)m.classList.remove("show")};
+  const intro=document.getElementById("intro");
+  const openBtn=document.getElementById("openLetter");
+
+  if(openBtn){
+    openBtn.addEventListener("click",function(){
+      if(intro){
+        document.body.classList.remove("locked");
+        intro.classList.add("hide");
+        setTimeout(()=>intro.remove(),750);
+      }
+      startMusic();
+    });
+  }
+})();
+
+// Lá thư 💌 là nút riêng: chỉ bấm vào đây mới mở thư.
+(function(){
+  const b=document.getElementById("letterBtn");
+  const m=document.getElementById("letterModal");
+  const c=document.getElementById("closeLetter");
+
+  if(b && m){
+    b.addEventListener("click",function(){
+      m.classList.add("show");
+      m.setAttribute("aria-hidden","false");
+    });
+  }
+
+  if(c && m){
+    c.addEventListener("click",function(){
+      m.classList.remove("show");
+      m.setAttribute("aria-hidden","true");
+    });
+  }
+
+  if(m){
+    m.addEventListener("click",function(e){
+      if(e.target===m){
+        m.classList.remove("show");
+        m.setAttribute("aria-hidden","true");
+      }
+    });
+  }
 })();
 
 </script>
