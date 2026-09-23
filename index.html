@@ -176,7 +176,6 @@ body{background:#03030d}
   .old-home:before{font-size:18px;left:15px;top:18px}
 }
 
-
 /* ===== MÀN HÌNH MỞ THƯ TRUNG THU ===== */
 .letter-fab{position:fixed;right:22px;bottom:22px;z-index:10001;width:58px;height:58px;padding:0;font-size:28px;display:flex;align-items:center;justify-content:center}
 .letter-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(7px)}
@@ -223,6 +222,97 @@ body{background:#03030d}
 @keyframes introFloat{50%{transform:translateY(-10px) scale(1.05)}}
 body.locked{overflow:hidden}
 
+ /* ===== PHONG BÌ + THƯ MỞ RA ===== */
+.letter-section{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:120px 20px 180px;
+  background:radial-gradient(circle at 50% 50%,rgba(255,50,190,.14),transparent 55%);
+}
+.envelope-area{width:min(850px,95vw);text-align:center}
+.envelope-area h2{margin-bottom:35px}
+.envelope{
+  position:relative;
+  width:360px;
+  height:240px;
+  margin:0 auto;
+  cursor:pointer;
+  perspective:1000px;
+  filter:drop-shadow(0 15px 30px #0009);
+}
+.envelope-body{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(145deg,#ff9ddd,#c82d91);
+  border-radius:12px;
+  box-shadow:0 0 25px #ff3fbd99,inset 0 0 20px #ffffff33;
+  z-index:4;
+}
+.envelope-body:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(35deg,transparent 49%,#ffffff55 50%,transparent 51%),linear-gradient(-35deg,transparent 49%,#ffffff55 50%,transparent 51%);
+  border-radius:12px;
+}
+.envelope-flap{
+  position:absolute;
+  top:0;left:0;
+  width:100%;height:135px;
+  background:linear-gradient(145deg,#ffb0df,#d9369a);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top center;
+  transition:transform 1s ease;
+  z-index:6;
+  filter:drop-shadow(0 4px 5px #0004);
+}
+.envelope-heart{
+  position:absolute;
+  z-index:7;
+  left:50%;top:52%;
+  transform:translate(-50%,-50%);
+  font-size:48px;
+  filter:drop-shadow(0 0 12px #fff);
+  transition:opacity .4s;
+}
+.letter-sheet{
+  position:absolute;
+  z-index:3;
+  left:7%;
+  width:86%;
+  height:315px;
+  bottom:10px;
+  padding:28px 30px;
+  background:linear-gradient(135deg,#fffafd,#ffeaf7);
+  border:2px solid #ff9bdc;
+  border-radius:10px;
+  color:#6d2854;
+  text-align:left;
+  box-shadow:0 0 20px #ff4abd66;
+  opacity:0;
+  transform:translateY(0);
+  transition:transform 1.15s ease .25s,opacity .5s ease .15s;
+  pointer-events:none;
+  overflow:auto;
+}
+.letter-sheet h3{margin:5px 0 15px;text-align:center;color:#d52d91;font-size:22px}
+.letter-sheet p{margin:8px 0;line-height:1.65;font-size:15px}
+.letter-sign{text-align:right;margin-top:15px;font-weight:bold;color:#c52b88}
+.envelope.open .envelope-flap{transform:rotateX(180deg);z-index:2}
+.envelope.open .letter-sheet{transform:translateY(-205px);opacity:1;z-index:8}
+.envelope.open .envelope-heart{opacity:0}
+.letter-hint{margin-top:245px;color:#ffd3ef;font-weight:bold;text-shadow:0 0 12px #ff3fbd}
+@media(max-width:600px){
+ nav a{font-size:11px;margin:0 4px}
+ .envelope{width:300px;height:200px}
+ .envelope-flap{height:112px}
+ .letter-sheet{height:280px;padding:20px}
+ .letter-sheet p{font-size:13px;line-height:1.5}
+ .envelope.open .letter-sheet{transform:translateY(-180px)}
+ .letter-hint{margin-top:220px}
+}
 </style>
 </head>
 <body class="locked">
@@ -241,7 +331,7 @@ body.locked{overflow:hidden}
 <nav>
 <a href="#home">Trang chủ</a>
 <a href="#wish">Lời chúc</a>
- <a href="#letters">Thư</a>
+<a href="#letters">Lá Thư</a>
 <a href="#memories">Kỷ niệm</a>
 </nav>
 
@@ -264,6 +354,34 @@ body.locked{overflow:hidden}
     <div class="love-line">🐰 kimanhiudau · i love you 💗</div>
   </div>
 </section>
+
+ <!-- ===== LÁ THƯ ===== -->
+<section id="letter" class="letter-section">
+  <div class="envelope-area">
+    <h2>💌 Một lá thư dành cho cậu</h2>
+
+    <div class="envelope" id="envelope" title="Bấm để mở thư">
+      <div class="letter-sheet">
+        <h3>Gửi 🐰 kimanhiudau 🐰💗</h3>
+
+        <p>Trung Thu này mình không có món quà gì quá đặc biệt, chỉ muốn gửi đến em một lời chúc thật dịu dàng. 🌙</p>
+
+        <p>Cảm ơn em vì những khoảnh khắc vui vẻ, những kỷ niệm đẹp và vì đã xuất hiện trong cuộc sống của mình. 💕</p>
+
+        <p>Mong em luôn vui vẻ, luôn cười thật nhiều và mỗi ngày đều có những điều khiến em hạnh phúc. ✨</p>
+
+        <p>Hy vọng chúng ta sẽ có thêm thật nhiều kỷ niệm đẹp để sau này nhìn lại vẫn có thể mỉm cười. 🌙🐰</p>
+
+        <div class="letter-sign">Thương em nhiều 💗<br>— kimanhiudau 🐰</div>
+      </div>
+
+      <div class="envelope-body"></div>
+      <div class="envelope-flap"></div>
+      <div class="envelope-heart">💗</div>
+    </div>
+
+    <div class="letter-hint" id="letterHint">👆 Bấm vào phong bì để mở thư</div>
+  </div>
 
 <section id="wish">
 <h2>Gửi 🐰 kimanhiudau 💗</h2>
@@ -330,9 +448,6 @@ function startMusic(){
     setTimeout(()=>intro.remove(),800);
   });
 })();
-
-// Lá thư 💌 là nút riêng, không liên quan nút nhạc.
-(function(){const b=document.getElementById('letterBtn'),m=document.getElementById('letterModal'),c=document.getElementById('closeLetter');if(b&&m)b.onclick=()=>{m.classList.add('show');m.setAttribute('aria-hidden','false')};if(c&&m)c.onclick=()=>{m.classList.remove('show');m.setAttribute('aria-hidden','true')};if(m)m.onclick=e=>{if(e.target===m)c.onclick()};})();
 </script>
 
 <!-- ===== PHÁO HOA ===== -->
