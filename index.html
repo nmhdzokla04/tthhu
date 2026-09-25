@@ -12,10 +12,11 @@ body{margin:0;background:#02030d;color:#fff;font-family:Arial,sans-serif;overflo
 .star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:twinkle 2s ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1;transform:scale(2)}}
 
+/* GIỮ NGUYÊN MENU NAVIGATOR */
 nav{position:fixed;z-index:20;top:0;left:0;right:0;text-align:center;padding:16px;background:#030516aa;backdrop-filter:blur(9px)}
 nav a{color:#fff;text-decoration:none;font-weight:bold;margin:0 13px;text-shadow:0 0 12px #ff5acb}
 
-/* ===== KHU VỰC CHỮ VÀ ẢNH BAY TRÔI TỰ DO ===== */
+/* ===== KHU VỰC CHỮ VÀ ẢNH BAY LINH TINH ===== */
 #flyingContainer {
   position: fixed;
   inset: 0;
@@ -24,10 +25,10 @@ nav a{color:#fff;text-decoration:none;font-weight:bold;margin:0 13px;text-shadow
   overflow: hidden;
 }
 
-/* Hiệu ứng bay lên chung */
 .fly-item {
   position: absolute;
-  animation: flyUp linear infinite;
+  will-change: transform, opacity;
+  animation: flyRandom linear infinite;
 }
 
 /* Chữ bay */
@@ -41,8 +42,8 @@ nav a{color:#fff;text-decoration:none;font-weight:bold;margin:0 13px;text-shadow
 
 /* Ảnh bay */
 .fly-img-box {
-  width: 110px;
-  height: 145px;
+  width: 100px;
+  height: 130px;
   padding: 4px;
   border-radius: 14px;
   background: linear-gradient(135deg,#fff,#ff77d5,#9d66ff);
@@ -56,19 +57,19 @@ nav a{color:#fff;text-decoration:none;font-weight:bold;margin:0 13px;text-shadow
   border: 1px solid rgba(255,255,255,0.9);
 }
 
-@keyframes flyUp {
+@keyframes flyRandom {
   0% {
-    transform: translateY(105vh) rotate(-5deg) scale(0.85);
+    transform: translate(var(--startX), var(--startY)) rotate(0deg) scale(0.8);
     opacity: 0;
   }
   15% {
-    opacity: 0.95;
+    opacity: 0.9;
   }
   85% {
-    opacity: 0.95;
+    opacity: 0.9;
   }
   100% {
-    transform: translateY(-20vh) rotate(6deg) scale(1.05);
+    transform: translate(var(--endX), var(--endY)) rotate(var(--rot)) scale(1.1);
     opacity: 0;
   }
 }
@@ -170,7 +171,7 @@ footer{position:relative;z-index:2;text-align:center;padding:45px;color:#ffc8ed}
   .home-center button{font-size:14px;padding:12px 20px}
   .love-line{font-size:13px}
   .old-home:before{font-size:18px;left:15px;top:18px}
-  .fly-img-box{width:80px;height:105px}
+  .fly-img-box{width:75px;height:100px}
 }
 
 .letter-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(7px)}
@@ -252,6 +253,7 @@ body.locked{overflow:hidden}
 <div id="stars"></div>
 <div class="lantern l1">🏮</div><div class="lantern l2">🏮</div><div class="lantern l3">🏮</div><div class="lantern l4">🏮</div>
 
+<!-- MENU ĐIỀU HƯỚNG TRANG CHỦ - LỜI CHÚC - LÁ THƯ - KỶ NIỆM -->
 <nav>
 <a href="#home">Trang chủ</a>
 <a href="#wish">Lời chúc</a>
@@ -277,6 +279,7 @@ body.locked{overflow:hidden}
 <p class="message">Trung Thu này mình không có món quà gì quá đặc biệt, chỉ muốn gửi đến cậu một lời chúc thật dịu dàng. Chúc cậu một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. I love you <3 🌙🐰✨</p>
 </section>
 
+<!-- KỶ NIỆM GIỮ NGUYÊN -->
 <section id="memories">
 <h2>Những khoảnh khắc 💞</h2>
 <div class="gallery">
@@ -291,6 +294,7 @@ body.locked{overflow:hidden}
 </div>
 </section>
 
+<!-- PHONG BÌ LÁ THƯ GIỮ NGUYÊN -->
 <div id="letterModal" class="letter-modal" aria-hidden="true">
   <button id="closeLetter" class="letter-close" type="button" aria-label="Đóng thư">×</button>
   <div class="letter-scene">
@@ -315,7 +319,7 @@ body.locked{overflow:hidden}
 <footer>🐰 kimanhiudau · i love you 💗</footer>
 
 <script>
-// Danh sách cụm từ & danh sách ảnh để cho bay
+// Danh sách câu chữ & ảnh tạo hiệu ứng bay ngẫu nhiên khắp nơi
 const textPhrases = [
   "🥮 Vui Hội Trăng Rằm",
   "🏮 Đèn Lồng Rực Rỡ",
@@ -329,11 +333,11 @@ const textPhrases = [
 ];
 const photoList = ["photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg", "photo7.jpg", "photo8.jpg"];
 
-function createFlyItem() {
+function createRandomFlyItem() {
   const container = document.getElementById("flyingContainer");
   if (!container) return;
   
-  const isImage = Math.random() < 0.35; // 35% tỉ lệ ra ảnh, 65% ra chữ
+  const isImage = Math.random() < 0.4;
   const item = document.createElement("div");
   item.className = "fly-item";
   
@@ -347,19 +351,31 @@ function createFlyItem() {
   } else {
     item.classList.add("fly-text");
     item.innerText = textPhrases[Math.floor(Math.random() * textPhrases.length)];
-    item.style.fontSize = Math.floor(Math.random() * 8 + 16) + "px";
+    item.style.fontSize = Math.floor(Math.random() * 8 + 15) + "px";
   }
   
-  item.style.left = Math.random() * 85 + 5 + "vw";
-  const duration = Math.random() * 5 + 8;
+  // Tọa độ điểm bắt đầu và kết thúc ngẫu nhiên khắp mọi hướng
+  const startX = Math.random() * 110 - 5;
+  const startY = Math.random() < 0.5 ? -15 : 105; 
+  const endX = Math.random() * 110 - 5;
+  const endY = startY === -15 ? 105 : -15;
+  const rot = (Math.random() - 0.5) * 60;
+
+  item.style.setProperty('--startX', startX + 'vw');
+  item.style.setProperty('--startY', startY + 'vh');
+  item.style.setProperty('--endX', endX + 'vw');
+  item.style.setProperty('--endY', endY + 'vh');
+  item.style.setProperty('--rot', rot + 'deg');
+
+  const duration = Math.random() * 6 + 7;
   item.style.animationDuration = duration + "s";
   
   container.appendChild(item);
   setTimeout(() => item.remove(), duration * 1000);
 }
 
-// Sinh vật thể bay liên tục
-setInterval(createFlyItem, 1000);
+// Tự động sinh đồ vật bay linh tinh liên tục
+setInterval(createRandomFlyItem, 800);
 
 for(let i=0;i<160;i++){
  const s=document.createElement("i");
