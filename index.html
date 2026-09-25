@@ -75,9 +75,9 @@ nav a{color:#fff;text-decoration:none;font-weight:bold;margin:0 13px;text-shadow
 }
 
 .hero{min-height:100vh;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:85px 18px 40px;background:radial-gradient(circle at 50% 35%,#39255d55,transparent 50%)}
-.moon{width:175px;height:175px;border-radius:50%;background:#fff1a4;box-shadow:0 0 30px #ffe995,0 0 90px #ffb84d88;position:relative;animation:float 4s ease-in-out infinite}
+.moon{width:175px;height:175px;border-radius:50%;background:#fff1a4;box-shadow:0 0 30px #ffe995,0 0 90px #ffb84d88;position:relative;}
 .moon:after{content:"🐰";position:absolute;font-size:70px;left:52px;top:57px}
-@keyframes float{50%{transform:translateY(-13px)}}
+
 .hero h1{font-size:clamp(28px,5vw,50px);margin:15px 0 8px;color:#fff;text-shadow:0 0 8px #fff,0 0 25px #ff58cb,0 0 60px #ff1fb9;animation:neon 1.8s infinite alternate}
 @keyframes neon{to{text-shadow:0 0 5px #fff,0 0 20px #ffb0e8,0 0 60px #ff22bc}}
 .hero p{font-size:clamp(16px,3vw,22px);font-weight:bold;color:#ffd9f5}
@@ -125,7 +125,7 @@ footer{position:relative;z-index:2;text-align:center;padding:45px;color:#ffc8ed}
   text-shadow:0 0 8px #fff,0 0 22px #ff36bd,0 0 45px #ff36bd;
 }
 
-/* NỘI DUNG TRUNG TÂM GIỮ NGUYÊN */
+/* NỘI DUNG TRUNG TÂM BAY LƠ LỬNG */
 .home-center{
   position:absolute;
   z-index:10;
@@ -137,7 +137,18 @@ footer{position:relative;z-index:2;text-align:center;padding:45px;color:#ffc8ed}
   flex-direction:column;
   align-items:center;
   text-align:center;
+  animation: centerFloat 4s ease-in-out infinite;
 }
+
+@keyframes centerFloat {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateY(-18px) rotate(1.5deg);
+  }
+}
+
 .home-center .moon{
   width:130px;
   height:130px;
@@ -262,7 +273,7 @@ body.locked{overflow:hidden}
 </nav>
 
 <section class="hero old-home" id="home">
-  <!-- KHU VỰC TRUNG TÂM GIỮ NGUYÊN -->
+  <!-- KHU VỰC TRUNG TÂM BAY LƠ LỬNG -->
   <div class="home-center">
     <div class="moon"></div>
     <p>Trung thu an lành nhé 💗</p>
