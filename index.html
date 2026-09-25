@@ -158,16 +158,17 @@ body{background:#03030d}
 
 /* ===== HIỆU ỨNG CHỮ LƠ LỬNG ===== */
 .floating-text {
+  position: relative;
   display: inline-block;
-  animation: floatText 3.5s ease-in-out infinite;
+  animation: floatText 3.2s ease-in-out infinite;
 }
 
 @keyframes floatText {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translateY(0px);
   }
   50% {
-    transform: translateY(-8px) rotate(1deg);
+    transform: translateY(-10px);
   }
 }
 
@@ -191,9 +192,7 @@ body{background:#03030d}
   .old-home:before{font-size:18px;left:15px;top:18px}
 }
 
-
 /* ===== MÀN HÌNH MỞ THƯ TRUNG THU ===== */
-
 .letter-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(7px)}
 .letter-modal.show{display:flex}
 .letter-paper{position:relative;width:min(520px,92vw);padding:34px 30px 30px;border-radius:22px;background:linear-gradient(145deg,#fff8fc,#ffdff1);color:#5b1648;box-shadow:0 0 35px #ff42c0,0 25px 80px #000;transform:rotate(-1deg);animation:letterIn .45s ease}
@@ -295,21 +294,21 @@ body.locked{overflow:hidden}
 
   <div class="home-center">
     <div class="moon"></div>
-    <p class="floating-text">Trung thu an lành nhé 💗</p>
-    <h1 class="floating-text">Trung Thu vui vẻ ✨</h1>
-    <p class="floating-text">iu cậu nhiều lắm 💕</p>
+    <p><span class="floating-text">Trung thu an lành nhé 💗</span></p>
+    <h1><span class="floating-text">Trung Thu vui vẻ ✨</span></h1>
+    <p><span class="floating-text">iu cậu nhiều lắm 💕</span></p>
     <button id="play" onclick="startMusic()">🎵 Phát nhạc 💗</button>
-    <div class="love-line floating-text">🐰 kimanhiudau · i love you 💗</div>
+    <div class="love-line"><span class="floating-text">🐰 kimanhiudau · i love you 💗</span></div>
   </div>
 </section>
 
 <section id="wish">
-<h2 class="floating-text">Gửi 🐰 kimanhiudau 💗</h2>
-<p class="message floating-text">Trung Thu này mình không có món quà gì quá đặc biệt, chỉ muốn gửi đến cậu một lời chúc thật dịu dàng. Chúc cậu một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. I love you <3 🌙🐰✨</p>
+<h2><span class="floating-text">Gửi 🐰 kimanhiudau 💗</span></h2>
+<p class="message"><span class="floating-text">Trung Thu này mình không có món quà gì quá đặc biệt, chỉ muốn gửi đến cậu một lời chúc thật dịu dàng. Chúc cậu một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. I love you <3 🌙🐰✨</span></p>
 </section>
 
 <section id="memories">
-<h2 class="floating-text">Những khoảnh khắc 💞</h2>
+<h2><span class="floating-text">Những khoảnh khắc 💞</span></h2>
 <div class="gallery">
 <div class="card"><div class="inner"><img src="photo1.jpg" alt="Kỷ niệm 1"><div class="back">💗 Mệt thì tựa vào tớ nhé</div></div></div>
 <div class="card"><div class="inner"><img src="photo2.jpg" alt="Kỷ niệm 2"><div class="back">🌙 Trung Thu vui vẻ</div></div></div>
@@ -343,7 +342,7 @@ body.locked{overflow:hidden}
 </div>
 
 <audio id="audio" src="music.mp3" loop preload="auto"></audio>
-<footer class="floating-text">🐰 kimanhiudau · i love you 💗</footer>
+<footer><span class="floating-text">🐰 kimanhiudau · i love you 💗</span></footer>
 
 <script>
 for(let i=0;i<160;i++){
