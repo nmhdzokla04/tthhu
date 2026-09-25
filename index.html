@@ -15,36 +15,60 @@ body{margin:0;background:#02030d;color:#fff;font-family:Arial,sans-serif;overflo
 nav{position:fixed;z-index:20;top:0;left:0;right:0;text-align:center;padding:16px;background:#030516aa;backdrop-filter:blur(9px)}
 nav a{color:#fff;text-decoration:none;font-weight:bold;margin:0 13px;text-shadow:0 0 12px #ff5acb}
 
-/* ===== CHỮ BAY XUNG QUANH (FLOATING TEXTS) ===== */
-#floatingTextContainer {
+/* ===== KHU VỰC CHỮ VÀ ẢNH BAY TRÔI TỰ DO ===== */
+#flyingContainer {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 5;
   overflow: hidden;
 }
-.fly-text {
+
+/* Hiệu ứng bay lên chung */
+.fly-item {
   position: absolute;
+  animation: flyUp linear infinite;
+}
+
+/* Chữ bay */
+.fly-text {
   white-space: nowrap;
   font-weight: bold;
   color: #ffe6f7;
   text-shadow: 0 0 10px #ff3ebd, 0 0 20px #ff1fb9;
   opacity: 0.85;
-  animation: floatAround linear infinite;
 }
-@keyframes floatAround {
+
+/* Ảnh bay */
+.fly-img-box {
+  width: 110px;
+  height: 145px;
+  padding: 4px;
+  border-radius: 14px;
+  background: linear-gradient(135deg,#fff,#ff77d5,#9d66ff);
+  box-shadow: 0 0 20px #ff42c0, 0 10px 25px #000b;
+}
+.fly-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.9);
+}
+
+@keyframes flyUp {
   0% {
-    transform: translateY(105vh) scale(0.8) rotate(-3deg);
+    transform: translateY(105vh) rotate(-5deg) scale(0.85);
     opacity: 0;
   }
-  20% {
-    opacity: 0.9;
+  15% {
+    opacity: 0.95;
   }
-  80% {
-    opacity: 0.9;
+  85% {
+    opacity: 0.95;
   }
   100% {
-    transform: translateY(-15vh) scale(1.1) rotate(4deg);
+    transform: translateY(-20vh) rotate(6deg) scale(1.05);
     opacity: 0;
   }
 }
@@ -61,6 +85,7 @@ button{border:0;border-radius:999px;padding:15px 28px;color:#fff;font-size:17px;
 .lantern{position:fixed;z-index:1;font-size:42px;animation:lantern 6s ease-in-out infinite}
 .l1{left:5%;top:25%}.l2{right:5%;top:30%;animation-delay:1s}.l3{left:12%;bottom:15%;animation-delay:2s}.l4{right:12%;bottom:18%;animation-delay:3s}
 @keyframes lantern{50%{transform:translateY(-30px) rotate(7deg)}}
+
 section{position:relative;z-index:2;min-height:70vh;padding:90px 6%;text-align:center}
 h2{font-size:clamp(30px,6vw,50px);color:#ffd5f3;text-shadow:0 0 22px #ff42be}
 .message{max-width:850px;margin:auto;font-size:20px;line-height:1.8;color:#ffe9f8}
@@ -98,6 +123,8 @@ footer{position:relative;z-index:2;text-align:center;padding:45px;color:#ffc8ed}
   color:#ff9bdd;
   text-shadow:0 0 8px #fff,0 0 22px #ff36bd,0 0 45px #ff36bd;
 }
+
+/* NỘI DUNG TRUNG TÂM GIỮ NGUYÊN */
 .home-center{
   position:absolute;
   z-index:10;
@@ -133,68 +160,8 @@ footer{position:relative;z-index:2;text-align:center;padding:45px;color:#ffc8ed}
   color:#ff91dc;
   text-shadow:0 0 10px #ff35bf,0 0 24px #ff35bf;
 }
-.orbit-photo{
-  position:absolute;
-  z-index:6;
-  width:150px;
-  height:190px;
-  left:50%;
-  top:50%;
-  margin-left:-75px;
-  margin-top:-95px;
-}
-.photo3d{
-  width:100%;
-  height:100%;
-  padding:5px;
-  border-radius:17px;
-  background:linear-gradient(135deg,#fff,#ff77d5,#9d66ff);
-  box-shadow:0 0 22px #ff42c0,0 14px 38px #000b;
-  transform-style:preserve-3d;
-  will-change:transform;
-  animation:photo3D 5.8s ease-in-out infinite;
-}
-.photo3d img{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:12px;
-  background:#151522;
-  border:1px solid rgba(255,255,255,.9);
-}
-@keyframes photo3D{
-  0%,100%{transform:translateY(0) rotateX(7deg) rotateY(-22deg) rotateZ(-5deg)}
-  25%{transform:translateY(-13px) rotateX(-4deg) rotateY(24deg) rotateZ(3deg)}
-  50%{transform:translateY(-22px) rotateX(8deg) rotateY(38deg) rotateZ(6deg)}
-  75%{transform:translateY(-10px) rotateX(-5deg) rotateY(-25deg) rotateZ(-3deg)}
-}
-.p1{transform:translate(-310px,-145px) rotate(-9deg)}
-.p2{transform:translate(165px,-150px) rotate(9deg)}
-.p3{transform:translate(-390px,20px) rotate(-12deg)}
-.p4{transform:translate(260px,25px) rotate(12deg)}
-.p5{transform:translate(-300px,190px) rotate(8deg)}
-.p6{transform:translate(170px,190px) rotate(-8deg)}
-.p7{transform:translate(-505px,-70px) rotate(-5deg)}
-.p8{transform:translate(365px,-65px) rotate(6deg)}
-.p2 .photo3d{animation-delay:.6s}
-.p3 .photo3d{animation-delay:1.2s}
-.p4 .photo3d{animation-delay:1.8s}
-.p5 .photo3d{animation-delay:2.4s}
-.p6 .photo3d{animation-delay:3s}
-.p7 .photo3d{animation-delay:3.6s}
-.p8 .photo3d{animation-delay:4.2s}
 
 @media(max-width:900px){
-  .orbit-photo{width:105px;height:135px;margin-left:-52px;margin-top:-67px}
-  .p1{transform:translate(-165px,-190px) rotate(-8deg)}
-  .p2{transform:translate(65px,-190px) rotate(8deg)}
-  .p3{transform:translate(-185px,-25px) rotate(-10deg)}
-  .p4{transform:translate(85px,-25px) rotate(10deg)}
-  .p5{transform:translate(-165px,175px) rotate(8deg)}
-  .p6{transform:translate(65px,175px) rotate(-8deg)}
-  .p7{transform:translate(-175px,55px) rotate(-5deg)}
-  .p8{transform:translate(90px,55px) rotate(5deg)}
   .home-center{width:68vw}
   .home-center .moon{width:110px;height:110px}
   .home-center .moon:after{font-size:42px;left:34px;top:34px}
@@ -203,6 +170,7 @@ footer{position:relative;z-index:2;text-align:center;padding:45px;color:#ffc8ed}
   .home-center button{font-size:14px;padding:12px 20px}
   .love-line{font-size:13px}
   .old-home:before{font-size:18px;left:15px;top:18px}
+  .fly-img-box{width:80px;height:105px}
 }
 
 .letter-modal{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(7px)}
@@ -271,7 +239,7 @@ body.locked{overflow:hidden}
 </head>
 <body class="locked">
 
-<div id="floatingTextContainer"></div>
+<div id="flyingContainer"></div>
 
 <div id="intro">
   <div id="introStars"></div>
@@ -292,15 +260,7 @@ body.locked{overflow:hidden}
 </nav>
 
 <section class="hero old-home" id="home">
-  <div class="orbit-photo p1"><div class="photo3d"><img src="photo1.jpg" alt="Kỷ niệm 1"></div></div>
-  <div class="orbit-photo p2"><div class="photo3d"><img src="photo2.jpg" alt="Kỷ niệm 2"></div></div>
-  <div class="orbit-photo p3"><div class="photo3d"><img src="photo3.jpg" alt="Kỷ niệm 3"></div></div>
-  <div class="orbit-photo p4"><div class="photo3d"><img src="photo4.jpg" alt="Kỷ niệm 4"></div></div>
-  <div class="orbit-photo p5"><div class="photo3d"><img src="photo5.jpg" alt="Kỷ niệm 5"></div></div>
-  <div class="orbit-photo p6"><div class="photo3d"><img src="photo6.jpg" alt="Kỷ niệm 6"></div></div>
-  <div class="orbit-photo p7"><div class="photo3d"><img src="photo7.jpg" alt="Kỷ niệm 7"></div></div>
-  <div class="orbit-photo p8"><div class="photo3d"><img src="photo8.jpg" alt="Kỷ niệm 8"></div></div>
-
+  <!-- KHU VỰC TRUNG TÂM GIỮ NGUYÊN -->
   <div class="home-center">
     <div class="moon"></div>
     <p>Trung thu an lành nhé 💗</p>
@@ -311,6 +271,7 @@ body.locked{overflow:hidden}
   </div>
 </section>
 
+<!-- LỜI CHÚC GIỮ NGUYÊN -->
 <section id="wish">
 <h2>Gửi 🐰 kimanhiudau 💗</h2>
 <p class="message">Trung Thu này mình không có món quà gì quá đặc biệt, chỉ muốn gửi đến cậu một lời chúc thật dịu dàng. Chúc cậu một mùa Trung Thu thật vui, thật ấm áp và luôn nở nụ cười. I love you <3 🌙🐰✨</p>
@@ -354,7 +315,7 @@ body.locked{overflow:hidden}
 <footer>🐰 kimanhiudau · i love you 💗</footer>
 
 <script>
-// Tạo hiệu ứng chữ bay tự do lên trời
+// Danh sách cụm từ & danh sách ảnh để cho bay
 const textPhrases = [
   "🥮 Vui Hội Trăng Rằm",
   "🏮 Đèn Lồng Rực Rỡ",
@@ -366,24 +327,39 @@ const textPhrases = [
   "💕 Khúc Hát Đoàn Viên",
   "🌸 Trung Thu An Lành"
 ];
+const photoList = ["photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg", "photo7.jpg", "photo8.jpg"];
 
-function createFlyingText() {
-  const container = document.getElementById("floatingTextContainer");
+function createFlyItem() {
+  const container = document.getElementById("flyingContainer");
   if (!container) return;
-  const el = document.createElement("div");
-  el.className = "fly-text";
-  el.innerText = textPhrases[Math.floor(Math.random() * textPhrases.length)];
   
-  el.style.left = Math.random() * 85 + 5 + "vw";
-  el.style.fontSize = Math.floor(Math.random() * 10 + 16) + "px";
-  const duration = Math.random() * 6 + 8;
-  el.style.animationDuration = duration + "s";
+  const isImage = Math.random() < 0.35; // 35% tỉ lệ ra ảnh, 65% ra chữ
+  const item = document.createElement("div");
+  item.className = "fly-item";
   
-  container.appendChild(el);
-  setTimeout(() => el.remove(), duration * 1000);
+  if (isImage) {
+    const imgBox = document.createElement("div");
+    imgBox.className = "fly-img-box";
+    const img = document.createElement("img");
+    img.src = photoList[Math.floor(Math.random() * photoList.length)];
+    imgBox.appendChild(img);
+    item.appendChild(imgBox);
+  } else {
+    item.classList.add("fly-text");
+    item.innerText = textPhrases[Math.floor(Math.random() * textPhrases.length)];
+    item.style.fontSize = Math.floor(Math.random() * 8 + 16) + "px";
+  }
+  
+  item.style.left = Math.random() * 85 + 5 + "vw";
+  const duration = Math.random() * 5 + 8;
+  item.style.animationDuration = duration + "s";
+  
+  container.appendChild(item);
+  setTimeout(() => item.remove(), duration * 1000);
 }
 
-setInterval(createFlyingText, 1200);
+// Sinh vật thể bay liên tục
+setInterval(createFlyItem, 1000);
 
 for(let i=0;i<160;i++){
  const s=document.createElement("i");
